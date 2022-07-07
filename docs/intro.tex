@@ -1,0 +1,63 @@
+\section{引言}
+
+\subsection{基础概念}
+
+来源（Origin）\cite{origin}: Web 内容的 URL 的方案 (协议)，主机 (域名) 和端口。两个对象是同源的当且仅当以上三个元素都相等。\\
+
+旁道攻击（Side-channel attack）：通过观察系统运行过程中的物理属性从而获取信息，而非暴力破解或运用算法的理论弱点。\\
+
+跨站点泄露漏洞（Cross-site leaks, XSLeaks）\cite{xsleaks}：一类存在与浏览器中的旁道攻击，让一个站点获取另一个站点的某些信息。\\
+
+
+例子：\code{evil.com} 想得知用户在 \code{google.com} 上的搜索的关键字。\code{evil.com} 可以发出请求 \code{https://google.com/search?q=a}, \code{https://google.com/search?q=b} …… 并测量从发出请求和接受到响应之间的时间间隔。若请求中发出的关键字是用户被曾经访问过，响应时间与未访问过的关键字响应相比会较短，因为本地会缓存响应中一部分的数据。\\
+
+\subsection{形式化建模}
+
+\subsubsection{基础模型\cite{modelbase}}
+
+跨站点泄露漏洞是输出一个比特 $b'$ 的函数 $xsl$
+
+$$b'=xsl(sdr, i, t)$$
+
+其输入为：
+
+\begin{itemize}
+    \item $sdr$：依赖于状态的资源（state-dependent resource），而它是二元组 $(url, (s, d))$，其中 $(s, d)\in\{(s_0, d_0), (s_1, d_1)\}$：
+    \begin{itemize}
+        \item $url$：目标资源的 URL
+        \item $S=\{s_0, s_1\}$：网站的两个状态的集合
+        \item $D=\{d_0, d_1\}$：网站的行为的差异，依赖于 $s_0$ 和 $s_1$
+    \end{itemize}
+    \item $i\in I$：包合技术，即如何从攻击网站向 $sdr$ 发出请求
+    \item $t\in T$：泄露技术，即如何观察目标网站上的差异
+\end{itemize}
+
+在以上的例子中：
+
+\begin{itemize}
+    \item $url=$ \code{https://google.com/search?q=[query]}
+    \item $S=\{$ \code{query} 未被查询, \code{query} 已被查询 $\}$
+    \item $D=\{$ 时间间隔较长, 时间间隔较短 $\}$
+    \item $i$ 可以使用多种方式，比如将 $url$ 嵌入到攻击网站中的 \code{iframe}
+    \item $t$ 为计时攻击
+\end{itemize}
+
+\subsubsection{扩展模型 \cite{modelext}}
+
+\citeauthor{modelext} 用 \citeauthor{modelbase} 的模型为基础，作出了扩展：
+
+
+\subsection{COSI}
+
+跨源状态推断（Cross-Origin State Inference）攻击\cite{cosi}：
+
+\begin{itemize}
+    \item 考虑两个网站
+    \begin{itemize}
+        \item 攻击网站：用于发出跨站点请求，是攻击者（部分）控制的网站
+        \item 目标网站：用户在此网站上有不同的状态，不被攻击者控制的网站
+    \end{itemize}
+    \item 攻击网站中含有依赖于状态的网址（state-dependent URL, SD-URL），比如一个只有用户登录后才能访问的网页
+    \item 被包含的 SD-URL 使用户的浏览器发出跨源请求，但同源策略防止攻击网站直接阅读响应
+    \item 攻击者可以通过跨站点泄露漏洞间接地读取响应
+\end{itemize}
