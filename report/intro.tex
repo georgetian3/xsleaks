@@ -9,7 +9,7 @@
 跨站点泄露漏洞（Cross-site leaks, XSLeaks）\cite{xsleaks}：一类存在与浏览器中的旁道攻击，让一个站点获取另一个站点的某些信息。\\
 
 
-例子：\code{evil.com} 想得知用户在 \code{google.com} 上的搜索的关键字。\code{evil.com} 可以发出请求 \code{https://google.com/search?q=a}, \code{https://google.com/search?q=b} …… 并测量从发出请求和接受到响应之间的时间间隔。若请求中发出的关键字是用户被曾经访问过，响应时间与未访问过的关键字响应相比会较短，因为本地会缓存响应中一部分的数据。\\
+例子：\code{evil.com} 想得知用户在 \code{google.com} 上的搜索的关键字。\code{evil.com} 可以发出请求 \code{https://google.com/search?q=a}, \code{https://google.com/search?q=b} …… 并测量从发出请求和接受到响应之间的时间间隔。若请求中发出的关键字被用户被曾经访问过，响应时间与未访问过的关键字响应相比会较短，因为本地会缓存响应中一部分的数据。\\
 
 \subsection{形式化建模}
 
