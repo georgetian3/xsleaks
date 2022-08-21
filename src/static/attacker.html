@@ -8,16 +8,10 @@
   <script>
     function test() {
       let url = 'http://georgetian.com:8880'
-      fetch(url).then(function(response) {
-        console.log('1111');
-        return response.json();
-      }).then(function(data) {
-        console.log('22222');
-        console.log(data);
-      }).catch(function() {
-        console.log('33333');
-        console.log("Booo");
-      });
+      const req = new XMLHttpRequest();
+      req.open("GET", url, false);
+      let resp = req.send();
+      console.log(resp);
     }
   </script>
 
