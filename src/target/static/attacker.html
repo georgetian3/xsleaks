@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Hello World</title>
+  </head>
+
+  <script>
+    function test() {
+      let url = 'http://georgetian.com:8880/static/
+      fetch(url).then(function(response) {
+        return response.json();
+      }).then(function(data) {
+        console.log(data);
+      }).catch(function() {
+        console.log("Booo");
+      });
+    }
+  </script>
+
+
+  <body>
+
+    
+  </body>
+</html>
