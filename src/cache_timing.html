@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" type="image/x-icon" href="https://www.bilibili.com/favicon.ico?v=1">
+  </head>
+
+  <script>
+    function timing() {
+      let div = document.getElementById('results');
+      const request = new XMLHttpRequest();
+      request.open('GET', 'https://www.bilibili.com/favicon.ico?v=1', false);
+      let before = performance.now();
+      request.send(null);
+      let after = performance.now()
+      console.log('done');
+      div.innerText = before + ' ' + after;
+    }
+  </script>
+
+  <body onload="timing()">
+
+    <div id="results">
+
+    </div>
+
+  </body>
+
+</html>

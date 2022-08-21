@@ -46,18 +46,3 @@ $$b'=xsl(sdr, i, t)$$
 
 \citeauthor{modelext} 用 \citeauthor{modelbase} 的模型为基础，作出了扩展：
 
-
-\subsection{COSI}
-
-跨源状态推断（Cross-Origin State Inference）攻击\cite{cosi}：
-
-\begin{itemize}
-    \item 考虑两个网站
-    \begin{itemize}
-        \item 攻击网站：用于发出跨站点请求，是攻击者（部分）控制的网站
-        \item 目标网站：用户在此网站上有不同的状态，不被攻击者控制的网站
-    \end{itemize}
-    \item 攻击网站中含有依赖于状态的网址（state-dependent URL, SD-URL），比如一个只有用户登录后才能访问的网页
-    \item 被包含的 SD-URL 使用户的浏览器发出跨源请求，但同源策略防止攻击网站直接阅读响应
-    \item 攻击者可以通过跨站点泄露漏洞间接地读取响应
-\end{itemize}
