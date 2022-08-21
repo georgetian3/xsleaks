@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/logo')
 def logo():
-    send_file('logo.png')
+    send_file('/static/logo.png')
 
 
 if __name__ == '__main__':
