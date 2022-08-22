@@ -23,7 +23,7 @@ def attacker():
 @app.after_request
 def add_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
-    #response.headers['Cache-Control'] = 'no-store'
+    response.headers['Cache-Control'] = '' # 'no-store'
     return response
 
 if __name__ == '__main__':
