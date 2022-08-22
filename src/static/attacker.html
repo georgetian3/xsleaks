@@ -10,8 +10,10 @@
       let url = 'http://ibgang.com:8880/static/img.png'
       const req = new XMLHttpRequest();
       req.open("GET", url, false);
+      let start = performance.now();
       let resp = req.send();
-      console.log(resp);
+      let end = performance.now();
+      console.log(end - start, resp);
     }
   </script>
 
