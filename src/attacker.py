@@ -5,5 +5,9 @@ app = Flask(__name__)
 def index():
     return send_file('static/attacker.html')
 
+@app.route('/size')
+def size():
+    return send_file('static/size.html')
+
 if __name__ == '__main__':
     app.run('0.0.0.0', '8880')
