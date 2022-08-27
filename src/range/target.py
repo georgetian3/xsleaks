@@ -10,16 +10,14 @@ def before_request():
 
 @app.route('/')
 def index():
-    print('status', request)
-    resp = make_response('test')
-    
-    return 'test' #resp
+    print('status', request)    
+    return 'test'
 
 @app.after_request
 def headers(resp):
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
-    resp.status = 123
+    #resp.status = 123
     print(resp)
     return resp
 
