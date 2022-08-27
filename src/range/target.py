@@ -12,10 +12,10 @@ def before_request():
 def index():
     print('status', request)
     resp = make_response('test')
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    """ resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
     resp.status = 123
-    print(resp)
+    print(resp) """
     return resp
 
 if __name__ == '__main__':
