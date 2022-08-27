@@ -5,8 +5,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    print('status', dict(request.args))
-    return 'test', 201
+    try:
+        status = int(dict(request.args)['status'])
+    except:
+        status = 401
+    return 'test', status
 
 """ @app.after_request
 def headers(resp):
