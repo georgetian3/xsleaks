@@ -27,7 +27,7 @@
     async function run(url) {
       for (let i = 100; i < 600; i++) {
         let par = document.createElement('p');
-        var text = document.createTextNode(`${i} ${await get_diff(url, i, false)} ${await get_diff(url, i, trie)}`);
+        var text = await document.createTextNode(`${i} ${await get_diff(url, i, false)} ${await get_diff(url, i, true)}`);
         par.appendChild(text);
         document.body.appendChild(par);
       }
