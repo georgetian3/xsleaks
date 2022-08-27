@@ -17,7 +17,7 @@ def index():
 def headers(resp):
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
-    #resp.status = 123
+    resp.headers['Status'] = '123'
     print(resp)
     return resp
 
