@@ -10,7 +10,7 @@ def before_request():
 
 @app.route('/')
 def index():
-    print('status', request.args)    
+    print('status', request.get_json())    
     return 'test', 123
 
 @app.after_request
