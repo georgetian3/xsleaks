@@ -5,7 +5,10 @@ self.addEventListener('install', function() {
 });
 
 self.addEventListener('fetch', function(e) {
-  let body = 'A';
+  let url = new URL(e.request.url);
+  let urlParams = new URLSearchParams(url.search);
+  let size = Number(urlParams.get('size'));
+  let body = 'A'.repeat(size);
   if (e.request.headers.get('range') === 'bytes=0-') {
   	e.respondWith(new Response(
       body,

