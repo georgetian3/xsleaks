@@ -11,11 +11,12 @@ def before_request():
 @app.route('/')
 def index():
     print('status', request)
-    resp = Response
+    resp = Response()
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
     resp.status = 123
-    return 'test'
+    resp.body = 'test'
+    return resp
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8880)
