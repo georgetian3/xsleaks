@@ -2,16 +2,11 @@ from flask import Flask, request, Response, make_response
 
 app = Flask(__name__)
 
-@app.before_request
-def before_request():
-    #print(request.headers)
-    pass
-
 
 @app.route('/')
 def index():
-    print('status', request.get_json())    
-    return 'test', 123
+    #print('status', request.get_json())    
+    return 'test'
 
 """ @app.after_request
 def headers(resp):
