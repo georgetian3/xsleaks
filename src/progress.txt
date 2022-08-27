@@ -1,0 +1,4 @@
+chromium bug - 1xx-5xx codes in getEntry().length -- functions as a proxy - see if it affects other browsers
+fetch issue from above webpage
+
+img src onload onerror
