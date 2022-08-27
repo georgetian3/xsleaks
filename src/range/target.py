@@ -12,11 +12,16 @@ def before_request():
 def index():
     print('status', request)
     resp = make_response('test')
-    """ resp.headers['Access-Control-Allow-Origin'] = '*'
+    
+    return 'test' #resp
+
+@app.after_request
+def headers(resp):
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
     resp.status = 123
-    print(resp) """
-    return 'test' #resp
+    print(resp)
+    return resp
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8880)
