@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     #print('status', request.get_json())    
-    return 'test'
+    return 'test', 201
 
 """ @app.after_request
 def headers(resp):
