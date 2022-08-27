@@ -16,6 +16,7 @@ def index():
     resp.headers['Cache-Control'] = 'no-store'
     resp.status = 123
     resp.body = 'test'
+    print(resp)
     return resp
 
 if __name__ == '__main__':
