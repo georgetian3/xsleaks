@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, make_response
 
 app = Flask(__name__)
 
@@ -11,11 +11,10 @@ def before_request():
 @app.route('/')
 def index():
     print('status', request)
-    resp = Response()
+    resp = make_response('test')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
     resp.status = 123
-    resp.body = 'test'
     print(resp)
     return resp
 
