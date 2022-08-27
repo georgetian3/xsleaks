@@ -11,13 +11,12 @@ def before_request():
 @app.route('/')
 def index():
     print('status', request)    
-    return 'test'
+    return 'test', 123
 
 @app.after_request
 def headers(resp):
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
-    resp.headers['Status'] = '123'
     print(resp)
     return resp
 
