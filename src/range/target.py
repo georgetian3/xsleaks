@@ -14,6 +14,7 @@ def index():
 @app.after_request
 def add_header(response):
     response.headers['Cache-Control'] = 'no-store'
+    response.status = 123
     return response
 
 if __name__ == '__main__':
