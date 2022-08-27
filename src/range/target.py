@@ -16,7 +16,7 @@ def index():
     resp.headers['Cache-Control'] = 'no-store'
     resp.status = 123
     print(resp) """
-    return resp
+    return 'test' #resp
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8880)
