@@ -10,7 +10,8 @@
       return new Promise((resolve) => {
         sound.onerror = () => {
           let end = performance.getEntries().length;
-          return resolve(performance.getEntries());
+          let entries = performance.getEntries()
+          return resolve(entries[entries.length() - 1]);
         }
       });
 
