@@ -13,7 +13,7 @@
     async function get_diff(url, code, succeed) {
       let start = performance.getEntries().length;
       let sound = document.createElement('audio');
-      sound.src = `${url}?size=${succeed ? 9999999 : 1}&${code}`;
+      sound.src = `${url}?size=${succeed ? 100 : 1}&error=${code}`;
 
       return new Promise((resolve) => {
         sound.onerror = () => {
