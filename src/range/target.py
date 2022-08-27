@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    #print('status', request.get_json())    
+    print('status', request.get_json()['status'])    
     return 'test', 201
 
 """ @app.after_request
