@@ -11,7 +11,7 @@
         sound.onerror = () => {
           let end = performance.getEntries().length;
           let entries = performance.getEntries();
-          return resolve(entries[entries.length - 1]);
+          return resolve(`${end - start} ${entries[entries.length - 1]}`);
         }
       });
 
