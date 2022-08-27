@@ -3,10 +3,10 @@
   <script>
     
 
-    async function get_diff(url, code, succeed) {
+    async function get_diff(url, status) {
       let start = performance.getEntries().length;
       let sound = document.createElement('audio');
-      sound.src = `${url}?size=${succeed ? 100 : 1}&error=${code}`;
+      sound.src = `${url}?status=${status}`;
 
       return new Promise((resolve) => {
         sound.onerror = () => {
@@ -20,23 +20,13 @@
     async function run(url) {
       for (let i = 100; i < 600; i++) {
         let par = document.createElement('p');
-        var text = await document.createTextNode(`${i} ${await get_diff(url, i, false)} ${await get_diff(url, i, true)}`);
+        var text = await document.createTextNode(`${i} ${await get_diff(url, i)}`);
         par.appendChild(text);
         document.body.appendChild(par);
       }
     }
     
     onload = () => {
-      console.log('out');
-      if ('serviceWorker' in navigator) {
-        addEventListener('load', async () => {
-          performance.setResourceTimingBufferSize(1337);
-          const registration = await navigator.serviceWorker.register('static/serviceworker.js');
-          console.log('in');
-          if (registration.installing)
-            location.reload();
-        });
-      }
       run('http://georgetian.com:8880');
     }
   </script>
