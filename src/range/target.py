@@ -10,7 +10,7 @@ def before_request():
 
 @app.route('/')
 def index():
-    print(request.status)
+    print('status', request.status)
     resp = Response
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Cache-Control'] = 'no-store'
