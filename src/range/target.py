@@ -3,7 +3,7 @@ from flask import Flask, send_file, request
 app = Flask(__name__)
 
 @app.before_request
-def before_request(request):
+def before_request():
     print(request.headers)
 
 
