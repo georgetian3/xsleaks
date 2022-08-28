@@ -8,7 +8,7 @@
       sound.src = `${url}?status=${status}`;
 
       return new Promise((resolve) => {
-        sound.onload = () => {
+        sound.onerror = () => {
           let entries = performance.getEntries();
           let end = entries.length;
           //console.log(entries);
@@ -25,7 +25,7 @@
     }
     
     onload = () => {
-      run('http://127.0.0.1:8880');
+      run('http://georgetian.com:8880/');
     }
   </script>
 </head>
