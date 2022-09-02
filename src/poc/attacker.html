@@ -5,7 +5,7 @@
     async function get_diff(url, status) {
       let start = performance.getEntries().length;
       let sound = document.createElement('audio');
-      sound.src = `${url}?status=${status}`;
+      sound.src = url;
 
       return new Promise((resolve) => {
         sound.onload = () => {
@@ -24,7 +24,7 @@
 
     async function run(url) {
       get_diff(url);
-      get_diff(url + '/does_not_exist');
+      get_diff(url + 'does_not_exist');
     }
     
     onload = () => {
