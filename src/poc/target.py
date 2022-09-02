@@ -1,10 +1,10 @@
-from flask import Flask, request, Response, make_response
+from flask import Flask, send_file
 
 app = Flask(__name__)
 
 @app.route('/exists')
 def exists():
-    return 'exists'
+    return send_file('img.png')
 
 @app.route('/does_not_exist')
 def does_not_exist():
