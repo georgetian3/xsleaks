@@ -2,3 +2,13 @@ chromium bug - 1xx-5xx codes in getEntry().length -- functions as a proxy - see 
 fetch issue from above webpage
 
 img src onload onerror
+
+
+
+
+
+flask return 206 + serviceworker - see if file exists by looking at status code
+
+read the github comment from the source
+
+KEEP NOTES
