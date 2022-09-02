@@ -2,17 +2,16 @@
   <title>Response size leak</title>
   <script>
     
-    async function get_diff(url, status) {
-      let start = performance.getEntries().length;
+    async function get_diff(url) {
       let element = document.createElement('img');
       element.src = url;
 
       return new Promise((resolve) => {
         element.onload = () => {
-          console.log('exists');
+          console.log(`${url} exists`);
         }
         element.onerror = () => {
-          console.log('does not exist');
+          console.log(`${url} does not exist`);
         }
       });
 
