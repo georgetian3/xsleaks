@@ -25,6 +25,10 @@
     async function run(url) {
       get_diff(url + 'exists');
       get_diff(url + 'does_not_exist');
+      const req = new XMLHttpRequest();
+      req.open("GET", 'http://ibgang.com:8880/exists');
+      req.open("GET", 'http://ibgang.com:8880/does_not_exist');
+      req.send();
     }
     
     onload = () => {
