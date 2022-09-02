@@ -9,14 +9,10 @@
 
       return new Promise((resolve) => {
         sound.onload = () => {
-          console.log('onload');
+          console.log('exists');
         }
         sound.onerror = () => {
-          console.log('onerror');
-          let entries = performance.getEntries();
-          let end = entries.length;
-          //console.log(entries);
-          return resolve(`${end - start}`);
+          console.log('does not exist');
         }
       });
 
