@@ -19,7 +19,9 @@
 				sound.src = `${url}?size=${size}&${Math.random()}`;
 				return new Promise((resolve) => {
 					sound.onerror = () => {
-						let end = performance.getEntries().length;
+						let diff = performance.getEntries().length - start;
+            console.log(diff);
+            document.body.innerHTML += diff;
 						return resolve(end - start);
 					}
 				});
@@ -27,7 +29,6 @@
 			
 			onload = () => {
 				let diff = singleSizeCheck("https://www.baidu.com/robots.txt", 1);
-        console.log(diff);
 			}
 
     </script>
