@@ -3,34 +3,38 @@
   <script>
     
     async function get(url) {
-      let element = document.createElement('iframe');
+      const element = document.createElement('iframe');
       element.src = url;
 
       return new Promise((resolve) => {
         element.onload = () => {
           console.log(`Accesible: ${url}`);
           document.body.innerHTML += `Accessible: ${url}`
-        }
+        };
         element.onerror = () => {
           console.log(`Inaccessible: ${url}`);
           document.body.innerHTML += `Inaccessible: ${url}`
-        }
+        };
       });
 
     }
-
-    async function run(url) {
-
-    }
-    
     onload = () => {
-      get('https://www.baidu.com/favicon.ico');
+      //get('https://www.baidu.com/favicon.ico');
       //get('https://learn.tsinghua.edu.cn/f/wlxt/index/course/student/');
+    }
+
+    function load() {
+      console.log('loaded');
+    }
+
+    function error() {
+      console.log('error');
     }
   </script>
 </head>
 
 <body>
+  <iframe display="none" src="https://learn.tsinghua.edu.cn/f/wlxt/index/course/student/" onload="load()" onerrror="error()"></iframe>
 </body>
 
 </html>
