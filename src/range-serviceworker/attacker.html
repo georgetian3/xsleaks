@@ -4,6 +4,10 @@
 		<title>Response size leak</title>
 		<script>
 
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
 			if ("serviceWorker" in navigator) {
 				addEventListener("load", async () => {
 					performance.setResourceTimingBufferSize(1337);
@@ -28,6 +32,7 @@
 			}
 			
 			onload = () => {
+        sleep(100);
 				singleSizeCheck("https://www.baidu.com/robots.txt", 1);
         singleSizeCheck("https://www.baidu.com/asdf", 1);
         singleSizeCheck("https://www.baidu.com/robots.txt", 1);
