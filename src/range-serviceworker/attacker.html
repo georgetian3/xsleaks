@@ -15,7 +15,7 @@
 			function singleSizeCheck(url, size) {
 				let start = performance.getEntries().length;
 				let sound = document.createElement("audio");
-				sound.src = `${url}?size=${size}&${Math.random()}`;
+				sound.src = `${url}?size=${size}}`;
 				return new Promise((resolve) => {
           sound.onload = () => {
             let diff = performance.getEntries().length - start;
