@@ -13,7 +13,7 @@
 				});
 			}
 
-			singleSizeCheck = async (url, size) => {
+			function singleSizeCheck(url, size) {
 				let start = performance.getEntries().length;
 				let sound = document.createElement("audio");
 				sound.src = `${url}?size=${size}&${Math.random()}`;
@@ -26,7 +26,7 @@
 			}
 			
 			onload = () => {
-				singleSizeCheck("https://www.baidu.com/robots.txt", 7240);
+				singleSizeCheck("https://www.baidu.com/robots.txt", 1);
 			}
 
     </script>
