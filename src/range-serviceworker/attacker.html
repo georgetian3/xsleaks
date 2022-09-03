@@ -22,10 +22,15 @@
 				let sound = document.createElement("audio");
 				sound.src = `${url}?size=${size}&${Math.random()}`;
 				return new Promise((resolve) => {
+          sound.onload = () => {
+            let diff = performance.getEntries().length - start;
+            document.body.innerHTML += url + 'onload' + diff;
+						return resolve(diff);
+          }
+
 					sound.onerror = () => {
 						let diff = performance.getEntries().length - start;
-            console.log(diff);
-            document.body.innerHTML += diff + '<br>';
+            document.body.innerHTML += url + 'onerror' + diff;
 						return resolve(diff);
 					}
 				});
