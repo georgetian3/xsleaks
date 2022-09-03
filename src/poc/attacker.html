@@ -3,7 +3,7 @@
   <script>
     
     async function get(url) {
-      let element = document.createElement('img');
+      let element = document.createElement('frame');
       element.src = url;
 
       return new Promise((resolve) => {
@@ -24,7 +24,8 @@
     }
     
     onload = () => {
-      get('https://learn.tsinghua.edu.cn/f/wlxt/kc/wj_wjb/student/beforePlay?wjid=2021012864_GG_1647272913680292269eba8-1aa3-4e86-a1bc-e69592addc4a&mk=mk_kcgg&sfgk=0&browser=-1');
+      get('https://www.google.com/robots.txt');
+      //get('https://learn.tsinghua.edu.cn/f/wlxt/gkk/v_wlkc_jsjbxxb_wjb/all/courseinfo/2022-2023-1144813095');
     }
   </script>
 </head>
