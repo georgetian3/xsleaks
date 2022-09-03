@@ -22,7 +22,7 @@
 						let diff = performance.getEntries().length - start;
             console.log(diff);
             document.body.innerHTML += diff;
-						return resolve(end - start);
+						return resolve(diff);
 					}
 				});
 			}
