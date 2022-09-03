@@ -21,14 +21,15 @@
 					sound.onerror = () => {
 						let diff = performance.getEntries().length - start;
             console.log(diff);
-            document.body.innerHTML += diff;
+            document.body.innerHTML += diff + '<br>';
 						return resolve(diff);
 					}
 				});
 			}
 			
 			onload = () => {
-				let diff = singleSizeCheck("https://www.baidu.com/robots.txt", 1);
+				singleSizeCheck("https://www.baidu.com/robots.txt", 1);
+        singleSizeCheck("https://www.baidu.com/asdf", 1);
 			}
 
     </script>
