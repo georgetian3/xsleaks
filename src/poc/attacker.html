@@ -9,7 +9,7 @@
       return new Promise((resolve) => {
         element.onload = () => {
           console.log(`Accesible: ${url}`);
-          document.body.innerHTML += `Accesible: ${url}`
+          document.body.innerHTML += `Accessible: ${url}`
         }
         element.onerror = () => {
           console.log(`Inaccessible: ${url}`);
