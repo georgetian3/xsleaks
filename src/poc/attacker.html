@@ -3,7 +3,7 @@
   <script>
     
     async function get(url) {
-      let element = document.createElement('iframe');
+      let element = document.createElement('img');
       element.src = url;
 
       return new Promise((resolve) => {
@@ -24,7 +24,7 @@
     }
     
     onload = () => {
-      get('https://www.baidu.com/robots.txt');
+      get('https://www.baidu.com/favicon.ico');
       //get('https://learn.tsinghua.edu.cn/f/wlxt/gkk/v_wlkc_jsjbxxb_wjb/all/courseinfo/2022-2023-1144813095');
     }
   </script>
