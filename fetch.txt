@@ -95,3 +95,21 @@ https://github.com/whatwg/fetch/issues/97  206 (partial content) / 304 (not modi
 
 
 https://github.com/whatwg/fetch/issues/144
+
+
+    So from those:
+
+    Already happens.
+    Is something for the Cache API to decide.
+    Already happens in step 8 of https://fetch.spec.whatwg.org/#concept-http-network-fetch as far as I can tell.
+    This does not currently happen.
+    Here are some things I'm wondering about:
+
+    Should we change https://fetch.spec.whatwg.org/#concept-http-network-or-cache-fetch step 15 to talk about one or more partial responses?
+    Should step 17.1 explicitly talk about a complete response?
+    Is there any freshening of headers when you get a 206 response? https://tools.ietf.org/html/rfc7234#section-4.3.4 seems to suggest there isn't. HTTP Range Requests also does not talk about this as far as I can tell.
+    Is therefore the only thing we need to introduce a 206 clause (similar to step 17 for 304) when cache mode is either "default" or "no-cache" that does recombining?
+
+    https://httpwg.org/specs/rfc7233.html#combining.byte.ranges
+
+        If the most recent response is an incomplete 200 (OK) response, then the header fields of that response are used for any combined response and replace those of the matching stored responses.

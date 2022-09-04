@@ -17,10 +17,10 @@
         document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>${event}</td><td>${diff}</td><tr>`;
         console.log(performance.getEntries());
       }
-      
+
       function get(url, size) {
         let start = performance.getEntries().length;
-        let element = document.createElement('img');
+        let element = document.createElement('audio');
         element.src = `${url}?size=${size}&${Math.random()}`;
 
         element.onload = () => {
