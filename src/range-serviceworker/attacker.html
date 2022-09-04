@@ -15,18 +15,15 @@
       function singleSizeCheck(url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement('img');
-        element.src = `${url}?size=1`;
+        element.src = `${url}?size=${size}`;
         return new Promise((resolve) => {
           element.onload = () => {
             let diff = performance.getEntries().length - start;
-            document.body.innerHTML += url + ' onload ' + diff + '<br>';
-            return resolve(diff);
+            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onload</td><td>${dif}</td>`;
           }
-
           element.onerror = () => {
             let diff = performance.getEntries().length - start;
-            document.body.innerHTML += url + ' onerror ' + diff + '<br>';
-            return resolve(diff);
+            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onerror</td><td>${dif}</td>`;
           }
         });
       }
@@ -35,7 +32,7 @@
         setTimeout(singleSizeCheck, 1000, 'https://www.baidu.com/robots.txt', 1);
         setTimeout(singleSizeCheck, 2000, 'https://www.baidu.com/asdfas', 1);
         setTimeout(singleSizeCheck, 3000, 'https://www.baidu.com/favicon.ico', 1);
-        setTimeout(console.log, 3000, performance.getEntries());
+        setTimeout(console.log, 4000, performance.getEntries());
       }
       
       onload = () => {
@@ -45,6 +42,15 @@
     </script>
   </head>
 
-  <body></body>
+  <body>
+    <table id="res">
+      <th>
+        <td>URL</td>
+        <td>Size</td>
+        <td>Event</td>
+        <td>Entries</td>
+      </th>
+    </table>
+  </body>
 
 </html>
