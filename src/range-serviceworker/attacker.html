@@ -14,16 +14,17 @@
 
       function singleSizeCheck(url, size) {
         let start = performance.getEntries().length;
-        let sound = document.createElement("audio");
-        sound.src = `${url}?size=${size}`;
+        let element = document.createElement("embed");
+        element.type = 'text';
+        element.src = `${url}?size=${size}`;
         return new Promise((resolve) => {
-          sound.onload = () => {
+          element.onload = () => {
             let diff = performance.getEntries().length - start;
             document.body.innerHTML += url + ' onload ' + diff + '<br>';
             return resolve(diff);
           }
 
-          sound.onerror = () => {
+          element.onerror = () => {
             let diff = performance.getEntries().length - start;
             document.body.innerHTML += url + ' onerror ' + diff + '<br>';
             return resolve(diff);
