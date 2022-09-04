@@ -3,7 +3,7 @@
   <head>
     <title>Response size leak</title>
     <script>
-      
+
       addEventListener("load", async () => {
         performance.setResourceTimingBufferSize(1337);
         const registration = await navigator.serviceWorker.register("static/serviceworker.js");
@@ -18,7 +18,7 @@
       function get(url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement('img');
-        element.src = `${url}?size=${size}`;
+        element.src = `${url}?size=${size}&${Math.random()}`;
 
         element.onload = () => {
           let diff = performance.getEntries().length - start;
