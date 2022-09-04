@@ -25,22 +25,9 @@
 					}
 				});
 			}
-
-			sizeCheck = async (url, size) => {
-				return new Promise(async (resolve) => {
-          let status = await singleSizeCheck(url, size);
-          if (status) {
-            console.log(true);
-            return resolve(true);
-          }
-          console.log(false);
-					return resolve(false);
-				});
-			}
-
-			
+	
 			onload = () => {
-				sizeCheck("https://www.baidu.com/robots.txt", 2970);
+				singleSizeCheck("https://www.baidu.com/robots.txt", 2970);
 			}
 	</script>
 </head>
