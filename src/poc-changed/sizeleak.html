@@ -27,16 +27,12 @@
 			}
 
 			sizeCheck = async (url, size) => {
-				let tries = 10;
 				return new Promise(async (resolve) => {
-					while (tries) {
-						let status = await singleSizeCheck(url, size);
-						if (status) {
-              console.log(true);
-							return resolve(true);
-            }
-						tries--;
-					}
+          let status = await singleSizeCheck(url, size);
+          if (status) {
+            console.log(true);
+            return resolve(true);
+          }
           console.log(false);
 					return resolve(false);
 				});
