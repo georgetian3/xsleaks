@@ -19,11 +19,11 @@
         return new Promise((resolve) => {
           element.onload = () => {
             let diff = performance.getEntries().length - start;
-            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onload</td><td>${diff}</td>`;
+            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onload</td><td>${diff}</td><tr>`;
           }
           element.onerror = () => {
             let diff = performance.getEntries().length - start;
-            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onerror</td><td>${diff}</td>`;
+            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onerror</td><td>${diff}</td><tr>`;
           }
         });
       }
