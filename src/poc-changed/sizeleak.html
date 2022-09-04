@@ -12,6 +12,7 @@
 			}
 
 			singleSizeCheck =  async (url, size) => {
+        console.log(size);
 				let start   = performance.getEntries().length;
 				let sound   = document.createElement("audio");
 				sound.src = `${url}?size=${size}&${Math.random()}`;
@@ -27,10 +28,13 @@
 			}
 	
 			onload = () => {
-				singleSizeCheck("https://www.baidu.com/robots.txt", 10);
-        singleSizeCheck("https://www.baidu.com/robots.txt", 1000);
-        singleSizeCheck("https://www.baidu.com/robots.txt", 2976);
-        singleSizeCheck("https://www.baidu.com/robots.txt", 2977);
+        let url = 'https://www.baidu.com/robots.txt'
+        let size = 1000;
+        while (!singleSizeCheck("https://www.baidu.com/robots.txt", size)) {
+          size++;
+          console.log(size);
+        }
+        
 			}
 	</script>
 </head>
