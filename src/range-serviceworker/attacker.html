@@ -33,7 +33,7 @@
 
       function run() {
         setTimeout(console.log('1'), 1000);
-        setTimeout(singleSizeCheck('https://www.baidu.com/robots.txt', 1), 2000);
+        setTimeout(singleSizeCheck, 2000, 'https://www.baidu.com/robots.txt', 1);
       }
       
       onload = () => {
