@@ -32,15 +32,19 @@
       function run() {
         urls = [
           'https://www.baidu.com/robots.txt',
+          'https://www.baidu.com/robots.txt',
+          'https://www.baidu.com/asdfas',
           'https://www.baidu.com/asdfas',
           'https://www.baidu.com/favicon.ico',
           'https://www.baidu.com/favicon.ico',
         ]
         sizes = [
           1,
+          1000000000,
           1,
+          1000000000,
           1,
-          100000000,
+          1000000000,
         ]
         for (let i = 0; i < urls.length; i++) {
           setTimeout(get, (i + 1) * 1000, urls[i], sizes[i]);
