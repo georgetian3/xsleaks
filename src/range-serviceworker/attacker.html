@@ -12,11 +12,11 @@
         });
       }
 
-      function singleSizeCheck(url, size) {
+      function get(url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement('img');
         element.src = `${url}?size=${size}`;
-        
+
         element.onload = () => {
           let diff = performance.getEntries().length - start;
           document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onload</td><td>${diff}</td><tr>`;
@@ -30,6 +30,15 @@
       }
 
       function run() {
+        resources = {
+          'https://www.baidu.com/robots.txt': 1,
+          'https://www.baidu.com/asdfas': 1,
+          'https://www.baidu.com/favicon.ico': 1,
+        }
+        let i = 1
+        for (resource in resources) {
+          console.log(resource);
+        }
         setTimeout(singleSizeCheck, 1000, 'https://www.baidu.com/robots.txt', 1);
         setTimeout(singleSizeCheck, 2000, 'https://www.baidu.com/asdfas', 1);
         setTimeout(singleSizeCheck, 3000, 'https://www.baidu.com/favicon.ico', 1);
