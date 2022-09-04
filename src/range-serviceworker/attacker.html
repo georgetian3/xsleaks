@@ -12,6 +12,10 @@
 				});
 			}
 
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
 			function singleSizeCheck(url, size) {
 				let start = performance.getEntries().length;
 				let sound = document.createElement("audio");
@@ -33,6 +37,7 @@
 			
 			onload = () => {
 				//singleSizeCheck("https://www.baidu.com/robots.txt", 1);
+        await sleep(1000);
         singleSizeCheck("https://www.baidu.com/asdf", 1);
         //singleSizeCheck("https://www.baidu.com/robots.txt", 1);
         //singleSizeCheck("https://www.baidu.com/asdf", 1);
