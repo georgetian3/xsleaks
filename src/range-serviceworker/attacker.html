@@ -34,20 +34,23 @@
 					}
 				});
 			}
+
+      async function run() {
+        
+      }
 			
-			onload = () => {
-				//singleSizeCheck("https://www.baidu.com/robots.txt", 1);
-        await sleep(1000);
+			async function on_load() {
+				console.log('1');
+        await setTimeout(null, 10000);
+        console.log('2');
         singleSizeCheck("https://www.baidu.com/asdf", 1);
-        //singleSizeCheck("https://www.baidu.com/robots.txt", 1);
-        //singleSizeCheck("https://www.baidu.com/asdf", 1);
 			}
 
     </script>
   </head>
 
   <body>
-    <audio src
+    <audio src="" onload="on_load()"></audio>
   </body>
 
 </html>
