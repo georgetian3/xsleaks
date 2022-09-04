@@ -12,3 +12,7 @@ flask return 206 + serviceworker - see if file exists by looking at status code
 read the github comment from the source
 
 KEEP NOTES
+
+
+
+range header upper limit 65500?
