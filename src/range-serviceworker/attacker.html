@@ -15,7 +15,7 @@
       function singleSizeCheck(url, size) {
         let start = performance.getEntries().length;
         let sound = document.createElement("audio");
-        sound.src = `${url}?size=${size}}`;
+        sound.src = `${url}?size=${size}`;
         return new Promise((resolve) => {
           sound.onload = () => {
             let diff = performance.getEntries().length - start;
@@ -31,11 +31,13 @@
         });
       }
 
-
-      
-      onload = () => {
+      function run() {
         setTimeout(singleSizeCheck("https://www.baidu.com/asdf", 1), 1000);
         setTimeout(singleSizeCheck("https://www.baidu.com/robots.txt", 1), 2000);
+      }
+      
+      onload = () => {
+        run();
       }
 
     </script>
