@@ -16,23 +16,23 @@
         let start = performance.getEntries().length;
         let element = document.createElement('img');
         element.src = `${url}?size=${size}`;
-        return new Promise((resolve) => {
-          element.onload = () => {
-            let diff = performance.getEntries().length - start;
-            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onload</td><td>${diff}</td><tr>`;
-          }
-          element.onerror = () => {
-            let diff = performance.getEntries().length - start;
-            document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onerror</td><td>${diff}</td><tr>`;
-          }
-        });
+        
+        element.onload = () => {
+          let diff = performance.getEntries().length - start;
+          document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onload</td><td>${diff}</td><tr>`;
+          console.log(performance.getEntries());
+        }
+        element.onerror = () => {
+          let diff = performance.getEntries().length - start;
+          document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>onerror</td><td>${diff}</td><tr>`;
+          console.log(performance.getEntries());
+        }
       }
 
       function run() {
         setTimeout(singleSizeCheck, 1000, 'https://www.baidu.com/robots.txt', 1);
         setTimeout(singleSizeCheck, 2000, 'https://www.baidu.com/asdfas', 1);
         setTimeout(singleSizeCheck, 3000, 'https://www.baidu.com/favicon.ico', 1);
-        setTimeout(console.log, 4000, performance.getEntries());
       }
       
       onload = () => {
