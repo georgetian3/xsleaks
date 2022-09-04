@@ -7,10 +7,16 @@ self.addEventListener("install", function() {
 self.addEventListener("fetch", function(e) {
   let url = new URL(e.request.url);
   console.log(url);
-  let urlParams = new URLSearchParams(url.search);
-  let size = urlParams.get("size");
-  let body = "A".repeat(Number(size));
   if (e.request.headers.get("range") === "bytes=0-") {
-  	e.respondWith(new Response(body, {status: 206, headers: {"Content-Range": "bytes 0-1337/13370" }}));
+    console.log('if');
+    let urlParams = new URLSearchParams(url.search);
+    e.respondWith(
+      new Response(
+        "A".repeat(Number(urlParams.get("size"))), 
+        {status: 206, headers: {"Content-Range": "bytes 0-1337/13370" }}
+      )
+    );
+  } else {
+    console.log('else');
   }
 });
