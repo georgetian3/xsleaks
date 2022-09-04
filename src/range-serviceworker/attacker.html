@@ -12,10 +12,6 @@
 				});
 			}
 
-      function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
-
 			function singleSizeCheck(url, size) {
 				let start = performance.getEntries().length;
 				let sound = document.createElement("audio");
