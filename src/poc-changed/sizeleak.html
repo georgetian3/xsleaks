@@ -30,7 +30,7 @@
 			onload = () => {
         let url = 'https://www.baidu.com/robots.txt'
         let size = 1000;
-        while (!singleSizeCheck("https://www.baidu.com/robots.txt", size)) {
+        while (singleSizeCheck("https://www.baidu.com/robots.txt", size)) {
           size++;
           console.log(size);
         }
