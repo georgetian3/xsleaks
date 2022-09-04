@@ -4,17 +4,20 @@
     <title>Response size leak</title>
     <script>
 
-      addEventListener("load", async () => {
-        performance.setResourceTimingBufferSize(1337);
-        const registration = await navigator.serviceWorker.register('/range-serviceworker/serviceworker.js');
-        if (registration.installing)
-          location.reload();
-      });
+      if ("serviceWorker" in navigator) {
+				addEventListener("load", async () => {
+					performance.setResourceTimingBufferSize(1337);
+					const registration = await navigator.serviceWorker.register("serviceworker.js");
+					if (registration.installing)
+						location.reload();
+				});
+			}
 
       function show(url, size, event, diff) {
         document.getElementById('res').innerHTML += `<tr><td>${url}</td><td>${size}</td><td>${event}</td><td>${diff}</td><tr>`;
         console.log(performance.getEntries());
       }
+      
       function get(url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement('img');
