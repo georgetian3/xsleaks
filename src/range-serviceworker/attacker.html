@@ -53,6 +53,9 @@
       }
       
       onload = () => {
+        let req = new XMLHttpRequest();
+        req.open('GET', 'https://www.baidu.com/robots.txt');
+        req.send();
         run();
       }
 
