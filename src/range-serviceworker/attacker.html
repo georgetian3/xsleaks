@@ -36,12 +36,10 @@
           'https://www.baidu.com/favicon.ico': 1,
         }
         let i = 1
-        for (resource in resources) {
-          console.log(resource);
+        for (url in resources) {
+          setTimeout(get, i * 1000, key, resources[url]);
+          i++;
         }
-        setTimeout(singleSizeCheck, 1000, 'https://www.baidu.com/robots.txt', 1);
-        setTimeout(singleSizeCheck, 2000, 'https://www.baidu.com/asdfas', 1);
-        setTimeout(singleSizeCheck, 3000, 'https://www.baidu.com/favicon.ico', 1);
       }
       
       onload = () => {
