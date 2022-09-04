@@ -30,16 +30,20 @@
       }
 
       function run() {
-        resources = {
-          'https://www.baidu.com/robots.txt': 1,
-          'https://www.baidu.com/asdfas': 1,
-          'https://www.baidu.com/favicon.ico': 1,
-          'https://www.baidu.com/favicon.ico': 100000,
-        }
-        let i = 1
-        for (url in resources) {
-          setTimeout(get, i * 1000, url, resources[url]);
-          i++;
+        urls = [
+          'https://www.baidu.com/robots.txt',
+          'https://www.baidu.com/asdfas',
+          'https://www.baidu.com/favicon.ico',
+          'https://www.baidu.com/favicon.ico',
+        ]
+        sizes = [
+          1,
+          1,
+          1,
+          100000000,
+        ]
+        for (let i = 0; i < urls.lengthl; i++) {
+          setTimeout(get, i * 1000, urls[i], sizes[i]);
         }
       }
       
