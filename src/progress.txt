@@ -16,3 +16,12 @@ KEEP NOTES
 
 
 range header upper limit 65500?
+
+
+
+key: audio
+only fixed audio?
+
+why is img not intercepted?
+
+other elements with src attribute
