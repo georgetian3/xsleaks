@@ -54,8 +54,9 @@
           'img',
           'audio',
         ]
-        for (const element of elements) {
-          for (let i = 0; i < urls.length; i++) {
+        
+        for (let i = 0; i < urls.length; i++) {
+          for (const element of elements) {
             setTimeout(get, (i + 1) * 1000, element, urls[i], sizes[i]);
           }
         }
