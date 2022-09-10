@@ -21,7 +21,7 @@
       function get(element, url, size) {
         let start = performance.getEntries().length;
         let e = document.createElement(element);
-        e.src = `${url}?size=${size}&${Math.random()}`;
+        e.src = `${url}?size=${size}`;
 
         e.onload = () => {
           let diff = performance.getEntries().length - start;
