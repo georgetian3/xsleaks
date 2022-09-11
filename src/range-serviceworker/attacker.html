@@ -63,12 +63,12 @@
           'video',
         ];
 
-        let wait = 1000;
+        let wait = 0;
         for (const element of elements) {
           for (const resource of resources) {
             for (const size of sizes) {
+              wait += 500;
               setTimeout(get, wait, element, base + resource, size);
-              wait += 1000;
             }
           }
         }
