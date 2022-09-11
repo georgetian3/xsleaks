@@ -60,8 +60,9 @@
 
       if ('serviceWorker' in navigator) {
 				addEventListener('load', async () => {
-					await navigator.serviceWorker.register('serviceworker.js');
+					const registration = await navigator.serviceWorker.register('serviceworker.js');
           await run();
+          await registration.unregister();
 				});
 			} else {
         document.body.innerHTML += ('Browser does not support Service Workers');
