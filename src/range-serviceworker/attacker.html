@@ -6,7 +6,7 @@
 
       if ("serviceWorker" in navigator) {
 				addEventListener("load", async () => {
-					performance.setResourceTimingBufferSize(1337);
+					performance.setResourceTimingBufferSize(150);
 					const registration = await navigator.serviceWorker.register("serviceworker.js");
 					if (registration.installing)
 						location.reload();
