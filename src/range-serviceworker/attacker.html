@@ -60,6 +60,7 @@
       
 
       function run() {
+        console.log('size', requests.size)
         for (let i = 0; i < requests.size; i++) {
           console.log(request[i]);
           setTimeout(get, (i + 1) * 1000, requests[i][0], requests[i][1], requests[i][2]);
