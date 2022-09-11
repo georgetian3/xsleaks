@@ -52,7 +52,12 @@
 
  
 
-      function run() {
+      async function run() {
+
+        if (document.getElementById('sw').checked) {
+          await navigator.serviceWorker.register('serviceworker.js');
+        }
+
         let elements = [];
         for (const resource of resources) {
           elements.push(resource.split('.')[0]);
@@ -73,15 +78,9 @@
         }
       }
 
-      if ('serviceWorker' in navigator) {
-				addEventListener('load', async () => {
-					//const registration = await navigator.serviceWorker.register('serviceworker.js');
-          run();
-          //await registration.unregister();
-				});
-			} else {
+      if (!'serviceWorker' in navigator) {
         document.body.innerHTML += ('Browser does not support Service Workers');
-      }
+			}
 
     </script>
 
@@ -95,6 +94,11 @@
   </head>
 
   <body>
+    <input type="checkbox" id="sw">
+    <label>Install Service Worker</label>
+    <br>
+    <button onclick="run();">Start</button>
+    <br>
     <table>
       <thead>
         <tr>
