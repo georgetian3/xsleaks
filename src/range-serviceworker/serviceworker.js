@@ -11,6 +11,6 @@ self.addEventListener("fetch", function(e) {
   let size = urlParams.get("size");
   let body = "A".repeat(Number(size));
   if (e.request.headers.get("range") === "bytes=0-") {
-  	e.respondWith(new Response(body, {status: 206, headers: {"Content-Range": "bytes 0-1337/13370" }}));
+  	e.respondWith(new Response(body, {status: 206, headers: {"Content-Range": `bytes 0-1337/${size}` }}));
   }
 });
