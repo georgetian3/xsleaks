@@ -65,6 +65,7 @@
         let wait = 1;
         for (const element of elements) {
           for (let i = 0; i < urls.length; i++) {
+            console.log(element, wait * 1000, urls[i], sizes[i]);
             setTimeout(get, wait * 1000, element, urls[i], sizes[i]);
             wait++;
           }
