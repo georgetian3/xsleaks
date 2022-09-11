@@ -42,9 +42,10 @@
           13369,
         ];
 
-        elements = resources.forEach(element => {
-          element.split('.')[0];
-        });
+        elements = [];
+        for (const resource of resources) {
+          elements.push(resource.split('.')[0]);
+        };
 
         let wait = 1000;
         for (const element of elements) {
