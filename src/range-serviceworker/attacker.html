@@ -60,7 +60,8 @@
 
       function next() {
         console.log(requests);
-        get(...requests[i++]);
+        get(requests[i][0], requests[i][1], requests[i][2]);
+        i++;
       }
 
       if ('serviceWorker' in navigator) {
