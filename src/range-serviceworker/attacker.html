@@ -34,22 +34,21 @@
       }
 
       function run() {
-        urls = [
-          'https://www.baidu.com/robots.txt',
-          'https://www.baidu.com/robots.txt',
-          'https://www.baidu.com/asdfas',
-          'https://www.baidu.com/asdfas',
-          'https://www.baidu.com/favicon.ico',
-          'https://www.baidu.com/favicon.ico',
-        ]
+        base = 'https://target.georgetian.com/';
+        resources = [
+          'text.txt',
+          'audio',
+          'frame',
+          'iframe',
+          'img',
+          'script',
+        ];
+        small = 2;
         sizes = [
-          1,
-          2800,
-          1,
-          2800,
-          1,
-          2800,
-        ]
+          2,
+          9999,
+        ];
+
         elements = [
           'audio',
           'embed',
@@ -61,13 +60,16 @@
           'source',
           'track',
           'video',
-        ]
-        let wait = 1;
+        ];
+
+        let wait = 1000;
         for (const element of elements) {
-          for (let i = 0; i < urls.length; i++) {
-            console.log(element, wait * 1000, urls[i], sizes[i]);
-            setTimeout(get, wait * 1000, element, urls[i], sizes[i]);
-            wait++;
+          for (const resource of resources) {
+            for (const size of sizes) {
+              console.log(wait, element, resource, size);
+              setTimeout(get, wait, element, base + resource, size);
+              wait += 1000;
+            }
           }
         }
         document.body.innerHTML += 'Done';
