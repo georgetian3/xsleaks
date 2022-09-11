@@ -67,7 +67,6 @@
         for (const element of elements) {
           for (const resource of resources) {
             for (const size of sizes) {
-              console.log(wait, element, resource, size);
               setTimeout(get, wait, element, base + resource, size);
               wait += 1000;
             }
