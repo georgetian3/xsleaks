@@ -17,12 +17,10 @@
         e.onload = () => {
           let diff = performance.getEntries().length - start;
           show(element, url, size, 'onload', diff);
-          next();
         }
         e.onerror = () => {
           let diff = performance.getEntries().length - start;
           show(element, url, size, 'onerror', diff);
-          next();
         }
       }
 
