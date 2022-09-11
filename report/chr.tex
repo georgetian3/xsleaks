@@ -1,0 +1,24 @@
+\section{Service Worker}
+
+\href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 performance API，影响到 Chromium 的攻击 \cite{herrera}。
+
+Performance API（性能接口）让开发者精确地测量网页在用户的设备上的性能。\url{https://www.wbolt.com/performance-api.html}
+\url{https://blog.csdn.net/weixin_47450807/article/details/123951462}\url{https://blog.openreplay.com/how-to-evaluate-site-speed-with-the-performance-api}。此攻击
+
+攻击过程如下：
+
+\begin{enumerate}
+    \item 安装拦截 range header（字节范围头）为 \code{bytes=0-} 的请求的 Service Worker。
+    \item 使用 \code{audio} 或 \code{video} 元素向目标资源发出请求，其请求中的字节范围头为 \code{bytes=0-}。
+    \item Service Worker 拦截以上的请求，并返回任意内容，长度为 \code{n} 的响应。Chromium 会再发出类似的请求，类以区别是 \code{bytes=0-} 变成了 \code{bytes=n-}。分两种情况：
+    \begin{enumerate}
+        \item 目标资源的大小小于 \code{n}，则请求失败，服务器返回 \code{4xx} 状态码，此事件不产生 \code{PerformanceEntry}
+        \item 目标资源的大小大于 \code{n}，则请求成功，服务器返回 \code{2xx} 状态码，此事件产生 \code{PerformanceEntry}
+    \end{enumerate}
+    \item 使用 \code{performance.getEntries().length} 可以得知当前的请求是否产生了 \code{PerformanceEntry}，从而可以判断目标资源的大小是否小于 \code{n}。
+\end{enumerate}
+
+通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。比如，Herrera 对 Google 的错误追踪系统的攻击展示了此漏洞的实用性。拥有权限的人员可以查询未被公开的漏洞并以 CSV 格式下载。查询参数可以包括漏洞所在的文件名以及行数。Herrera 通过修改查询参数而将包含漏洞的请求所返回的 CSV 文件的大小放大。最后使用以上的漏洞可以
+
+（测试包含 service worker 的网站后，为了注销 service worker, 可能需要重启浏览器程序）。
+
