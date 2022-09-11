@@ -4,11 +4,13 @@
     <title>Response size leak</title>
     <script>
 
-      if ("serviceWorker" in navigator) {
+      if ('serviceWorker' in navigator) {
 				addEventListener("load", async () => {
-					await navigator.serviceWorker.register("serviceworker.js");
+					await navigator.serviceWorker.register('serviceworker.js');
 				});
-			}
+			} else {
+        console.log('Browser does not support Service Workers');
+      }
 
 
       function show(element, url, size, event, diff) {
