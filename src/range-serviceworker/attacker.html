@@ -29,12 +29,12 @@
         base = 'https://target.georgetian.com/';
         resources = [
           //'text.txt',
-          'audio',
+          'audio.mp3',
           //'frame',
           //'iframe',
-          'img',
+          'img.png',
           //'script',
-          //'video',
+          'video.mp4',
         ];
         small = 2;
         sizes = [
@@ -42,24 +42,11 @@
           13369,
         ];
 
-        elements = [
-          'audio',
-          //'embed',
-          //'iframe',
-          //'frame',
-          'img',
-          //'input',
-          //'script',
-          //'source',
-          //'track',
-          //'video',
-        ];
-
         let wait = 1000;
         for (const element of elements) {
           for (const resource of resources) {
             for (const size of sizes) {
-              setTimeout(get, wait, element, base + resource, size);
+              setTimeout(get, wait, resource.split('.')[0], base + resource, size);
               wait += 1000;
             }
           }
