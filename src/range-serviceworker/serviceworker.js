@@ -11,6 +11,6 @@ self.addEventListener("fetch", function(e) {
   let body = "A".repeat(Number(size));
   if (e.request.headers.get("range") === "bytes=0-") {
     console.log('intercepted:', url);
-  	e.respondWith(new Response(body, {status: 206, headers: {"Content-Range": `bytes 0-1337/${100000}` }}));
+  	e.respondWith(new Response(body, {status: 206, headers: {"Content-Range": `bytes 0-${size - 1}/100000` }}));
   }
 });
