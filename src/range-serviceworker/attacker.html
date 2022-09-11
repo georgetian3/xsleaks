@@ -42,24 +42,25 @@
         95000,
       ];
 
-      elements = [];
-      for (const resource of resources) {
-        elements.push(resource.split('.')[0]);
-      };
 
-
-      let requests = [];
-
-      for (const element of elements) {
-        for (const resource of resources) {
-          for (const size of sizes) {
-            requests.push([element, base + resource, size]);
-          }
-        }
-      }
-      
+ 
 
       function run() {
+        let elements = [];
+        for (const resource of resources) {
+          elements.push(resource.split('.')[0]);
+        };
+
+
+        let requests = [];
+
+        for (const element of elements) {
+          for (const resource of resources) {
+            for (const size of sizes) {
+              requests.push([element, base + resource, size]);
+            }
+          }
+        }
         console.log('size', requests.size)
         for (let i = 0; i < requests.size; i++) {
           console.log(request[i]);
