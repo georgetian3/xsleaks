@@ -50,21 +50,12 @@
       ];
 
 
- 
-
       async function run() {
-
-        if (document.getElementById('sw').checked) {
-          console.log('Registering serviceworker.js');
-          
-        }
 
         let elements = [];
         for (const resource of resources) {
           elements.push(resource.split('.')[0]);
         };
-
-
         let requests = [];
 
         for (const element of elements) {
