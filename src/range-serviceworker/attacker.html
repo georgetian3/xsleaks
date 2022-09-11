@@ -52,14 +52,14 @@
 
         elements = [
           'audio',
-          'embed',
+          //'embed',
           'iframe',
-          'frame',
+          //'frame',
           'img',
-          'input',
+          //'input',
           'script',
-          'source',
-          'track',
+          //'source',
+          //'track',
           'video',
         ];
 
@@ -73,7 +73,7 @@
             }
           }
         }
-        document.body.innerHTML += 'Done';
+        setTimeout(get, wait, console.log('Done'));
       }
       
       onload = () => {
