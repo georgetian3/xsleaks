@@ -51,7 +51,7 @@
         for (const element of elements) {
           for (const resource of resources) {
             for (const size of sizes) {
-              setTimeout(get, wait, resource.split('.')[0], base + resource, size);
+              setTimeout(get, wait, element, base + resource, size);
               wait += 1000;
             }
           }
