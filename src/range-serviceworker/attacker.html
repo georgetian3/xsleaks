@@ -56,7 +56,7 @@
 
         if (document.getElementById('sw').checked) {
           console.log('Registering serviceworker.js');
-          await navigator.serviceWorker.register('serviceworker.js');
+          
         }
 
         let elements = [];
@@ -79,9 +79,12 @@
         }
       }
 
-      if (!'serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator) {
+        await navigator.serviceWorker.register('serviceworker.js');
+        run();
+			} else {
         document.body.innerHTML += ('Browser does not support Service Workers');
-			}
+      }
 
     </script>
 
@@ -95,11 +98,11 @@
   </head>
 
   <body>
-    <input type="checkbox" id="sw">
+    <!-- <input type="checkbox" id="sw">
     <label>Install Service Worker</label>
     <br>
     <button onclick="run();">Start</button>
-    <br>
+    <br> -->
     <table>
       <thead>
         <tr>
