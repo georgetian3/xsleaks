@@ -15,12 +15,22 @@
         e['src'] = `${url}?size=${size}`;
 
         e.onload = () => {
-          let diff = performance.getEntries().length - start;
-          show(element, url, size, 'onload', diff);
+          show(element, url, size, 'onload', performance.getEntries().length - start);
         }
         e.onerror = () => {
-          let diff = performance.getEntries().length - start;
-          show(element, url, size, 'onerror', diff);
+          show(element, url, size, 'onerror', performance.getEntries().length - start);
+        }
+        e.onabort = () => {
+          show(element, url, size, 'onabort', performance.getEntries().length - start);
+        }
+        e.onemptied = () => {
+          show(element, url, size, 'onemptied', performance.getEntries().length - start);
+        }
+        e.onstalled = () => {
+          show(element, url, size, 'onstalled', performance.getEntries().length - start);
+        }
+        e.onsuspend = () => {
+          show(element, url, size, 'onsuspend', performance.getEntries().length - start);
         }
       }
 
