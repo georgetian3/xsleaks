@@ -25,3 +25,9 @@ only fixed audio?
 why is img not intercepted?
 
 other elements with src attribute
+
+summarize leaks
+
+serviceworker overall function/leaks
+
+does browser differentiate between response from sw vs server
