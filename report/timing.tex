@@ -1,0 +1,24 @@
+\subsection{时序攻击}
+
+时序攻击通过测量两个事件之间的时间间隔而推断出信息。
+
+时序攻击的最重要的要素之一是时间间隔的测量 \cite{clock}。Performance API 中的 \code{performance.now()} 返回网页加载到调用函数之间的时间间隔，可以达到微秒级别的精确度 \cite{m_now}。为了避免使用此函数的攻击，有些浏览器降低了\code{performance.now()} 的精确度 \cite{p_chr,p_moz,p_web}。与较老的 Date API，它们是两个显式时钟。此外，隐试的时钟包括 \cite{timers}：
+
+\begin{itemize}
+    \item CSS 动画
+    \item setTimeout
+    \item setImmediate
+    \item postMessage
+    \item Sub worker
+    \item Broadcast Channel
+    \item MessageChannel
+    \item SharedArrayBuffer
+\end{itemize}
+
+比如，可以可以
+
+\url{https://xsleaks.dev/docs/attacks/timing-attacks/performance-api/#connection-speed}
+
+inflation
+
+statistical analysis
