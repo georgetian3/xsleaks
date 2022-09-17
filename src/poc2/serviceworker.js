@@ -13,6 +13,7 @@ self.addEventListener('fetch', function(e) {
   let id = urlParams.get('id');
   let body = 'A'.repeat(Number(size));
   if (!requested.has(id)) {
+    requested.add(id);
     console.log('intercepted');
   	e.respondWith(new Response(body, {status: 206, headers: {'Content-Range': `bytes 0-${size - 1}/100000` }}));
   }
