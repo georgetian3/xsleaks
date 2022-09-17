@@ -16,6 +16,7 @@ self.addEventListener('fetch', function(e) {
   let urlParams = new URLSearchParams(url.search);
   let size = urlParams.get('size');
   let id = urlParams.get('id');
+  console.log('id');
   let body = 'A'.repeat(Number(size));
   if (!requested.has(id)) {
     requested.add(id);
