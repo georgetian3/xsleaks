@@ -1,6 +1,6 @@
 'use strict';
 
-var requested = Set()
+var requested = new Set()
 
 self.addEventListener('install', function() {
     self.skipWaiting();
