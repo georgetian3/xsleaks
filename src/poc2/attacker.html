@@ -16,11 +16,11 @@
 
         e.onload = () => {
           show(element, url, size, 'onload', performance.getEntries().length - start);
-          console.log(performance.getEntries())
+          //console.log(performance.getEntries())
         }
         e.onerror = () => {
           show(element, url, size, 'onerror', performance.getEntries().length - start);
-          console.log(performance.getEntries())
+          //console.log(performance.getEntries())
 
         }
         e.onabort = () => {
