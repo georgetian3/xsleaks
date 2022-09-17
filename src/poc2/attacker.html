@@ -12,7 +12,7 @@
       function get(element, url, size) {
         let start = performance.getEntries().length;
         let e = document.createElement(element);
-        e['src'] = `${url}?size=${size}&token=test`;
+        e['src'] = `${url}?size=${size}&intercept=true`;
 
         e.onload = () => {
           show(element, url, size, 'onload', performance.getEntries().length - start);
