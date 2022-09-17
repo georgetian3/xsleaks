@@ -15,7 +15,7 @@ self.addEventListener('fetch', function(e) {
   console.log(requested, id);
   if (!requested.has(id)) {
     requested.add(id);
-    console.log('intercepted');
+    console.log('intercepted', url);
   	e.respondWith(new Response(body, {status: 206, headers: {'Content-Range': `bytes 0-${size - 1}/100000` }}));
   }
 });
