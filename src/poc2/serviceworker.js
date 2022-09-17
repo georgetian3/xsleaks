@@ -16,6 +16,14 @@ self.addEventListener('fetch', function(e) {
   if (!requested.has(id)) {
     requested.add(id);
     console.log('intercepted', url);
-  	e.respondWith(new Response(body, {status: 206, headers: {'Content-Range': `bytes 0-${size - 1}/100000` }}));
+  	e.respondWith(
+      new Response(body,
+        {
+          status: 206, headers: {
+          'Content-Range': `bytes 0-${size - 1}/100000`,
+          'Content-Type': `image/png`,
+        }}
+      )
+    );
   }
 });
