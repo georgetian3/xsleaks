@@ -5,6 +5,7 @@ self.addEventListener("install", function() {
 });
 
 self.addEventListener("fetch", function(e) {
+  console.log(e)
   let url = new URL(e.request.url);
   let urlParams = new URLSearchParams(url.search);
   let size = urlParams.get("size");
