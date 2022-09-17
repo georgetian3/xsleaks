@@ -8,6 +8,11 @@ self.addEventListener('install', function() {
 
 self.addEventListener('fetch', function(e) {
   let url = new URL(e.request.url);
+  console.log(url)
+  if (url == 'https://attacker.georgetian.com/reset') {
+    requested.clear();
+    return;
+  }
   let urlParams = new URLSearchParams(url.search);
   let size = urlParams.get('size');
   let id = urlParams.get('id');
