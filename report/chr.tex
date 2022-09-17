@@ -1,12 +1,10 @@
-\section{Chromium 漏洞实例}
+\section{基于 Service Worker 与 Performance API 的 Chromium 漏洞}
 
-\href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 performance API，影响到 Chromium 的攻击 \cite{herrera}。
+\subsection{概念验证}
 
-Service worker
+\href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 Performance API，影响到 Chromium 的攻击 \cite{herrera}。Service worker \url{https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API} 
 
 Performance API（性能接口）让开发者精确地测量网页在用户的设备上的性能 \cite{papi}。此攻击
-
-
 
 攻击过程如下：
 
@@ -15,13 +13,47 @@ Performance API（性能接口）让开发者精确地测量网页在用户的�
     \item 使用 \code{audio} 或 \code{video} 元素向目标资源发出请求，其请求中的字节范围头为 \code{bytes=0-}。
     \item Service Worker 拦截以上的请求，并返回任意内容，长度为 \code{n} 的响应。Chromium 会再发出类似的请求，类以区别是 \code{bytes=0-} 变成了 \code{bytes=n-}。分两种情况：
     \begin{enumerate}
-        \item 目标资源的大小小于 \code{n}，则请求失败，服务器返回 \code{4xx} 状态码，此事件不产生 \code{PerformanceEntry}
-        \item 目标资源的大小大于 \code{n}，则请求成功，服务器返回 \code{2xx} 状态码，此事件产生 \code{PerformanceEntry}
+        \item 目标资源的大小小于 \code{n}，则请求失败，服务器返回 \code{416} 状态码，此事件不产生 \code{PerformanceEntry}
+        \item 目标资源的大小大于 \code{n}，则请求成功，服务器返回 \code{206} 状态码，此事件产生 \code{PerformanceEntry}
     \end{enumerate}
     \item 使用 \code{performance.getEntries().length} 可以得知当前的请求是否产生了 \code{PerformanceEntry}，从而可以判断目标资源的大小是否小于 \code{n}。
 \end{enumerate}
 
-通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。比如，Herrera 对 Google 的错误追踪系统的攻击展示了此漏洞的实用性。拥有权限的人员可以查询未被公开的漏洞并以 CSV 格式下载。查询参数可以包括漏洞所在的文件名以及行数。Herrera 通过修改查询参数而将包含漏洞的请求所返回的 CSV 文件的大小放大。最后使用以上的漏洞可以
+通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。比如，Herrera 对 Google 的错误追踪系统的 XS-Search 攻击就可以使用此漏洞。
 
 （测试包含 service worker 的网站后，为了注销 service worker, 可能需要重启浏览器程序）。
 
+\subsection{修复方法}
+
+由于概念验证中检测资源大小基于成功与失败创建 \code{PerformanceEntry} 的行为的差异 \url{https://chromium.googlesource.com/chromium/src/+/5e556dd80e03b7a217e10990d71be25d07e1ece7}
+
+\begin{quote}
+    Currently we don't report performance entries with failing status codes.
+    From the spec's perspective, reporting aborts is a MAY, but failing
+    status code responses should not be considered aborts. [1]
+    Chromium is the only engine which doesn't report those entries.
+    This CL fixes that to report them similarly to successful status codes.
+\end{quote}
+
+此修复的具体实现比较简单。源代码的版本库将 \url{https://chromium-review.googlesource.com/c/chromium/src/+/1796544}
+
+\begin{lstlisting}
+if (resource->GetResponse().IsHTTP() &&
+    resource->GetResponse().HttpStatusCode() < 400)
+\end{lstlisting}
+
+改成 
+
+\begin{lstlisting}
+if (resource->GetResponse().IsHTTP())
+\end{lstlisting}
+
+
+即任何响应，无论状态码表示成功或失败，都会产生一个 \code{PerformanceEntry}。
+
+
+通过运行 Luan 的概念验证，可以确认此修复成功地防止此攻击。
+
+\subsection{扩展}
+
+不稳定

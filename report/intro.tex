@@ -1,48 +1,8 @@
 \section{引言}
 
-\subsection{基础概念}
+在现在日益依赖技术的世界中，用户可以有意或无意地将个人信息上传到互联网。因此恶意行为者通过互联网窃取个人信息的激励以及潜在的收益也日益增加。因此网络安全以及在线上的个人隐私的维护是安全研究人员与恶意攻击者之间无尽的战争。
 
-来源（Origin）\cite{origin}: Web 内容的 URL 的方案 (协议)，主机 (域名) 和端口。两个对象是同源的当且仅当以上三个元素都相等。\\
+跨站点泄露漏洞（Cross-site leaks, XSLeaks）\cite{xsleaks} 是一类浏览器中的旁道攻击。当用户访问攻击者控制的网站或包含攻击者的恶意代码的网站（统称“攻击网站”），攻击者就可以通过使用跨站点泄露漏洞而获取用户在另一个网站（统称“目标网站”）上的信息。
 
-旁道攻击（Side-channel attack）：通过观察系统运行过程中的物理属性从而获取信息，而非暴力破解或运用算法的理论弱点。\\
-
-跨站点泄露漏洞（Cross-site leaks, XSLeaks）\cite{xsleaks}：一类存在与浏览器中的旁道攻击，让一个站点获取另一个站点的某些信息。\\
-
-
-例子：\code{evil.com} 想得知用户在 \code{google.com} 上的搜索的关键字。\code{evil.com} 可以发出请求 \code{https://google.com/search?q=a}, \code{https://google.com/search?q=b} …… 并测量从发出请求和接受到响应之间的时间间隔。若请求中发出的关键字被用户被曾经访问过，响应时间与未访问过的关键字响应相比会较短，因为本地会缓存响应中一部分的数据。\\
-
-\subsection{形式化建模}
-
-\subsubsection{基础模型\cite{modelbase}}
-
-跨站点泄露漏洞是输出一个比特 $b'$ 的函数 $xsl$
-
-$$b'=xsl(sdr, i, t)$$
-
-其输入为：
-
-\begin{itemize}
-    \item $sdr$：依赖于状态的资源（state-dependent resource），而它是二元组 $(url, (s, d))$，其中 $(s, d)\in\{(s_0, d_0), (s_1, d_1)\}$：
-    \begin{itemize}
-        \item $url$：目标资源的 URL
-        \item $S=\{s_0, s_1\}$：网站的两个状态的集合
-        \item $D=\{d_0, d_1\}$：网站的行为的差异，依赖于 $s_0$ 和 $s_1$
-    \end{itemize}
-    \item $i\in I$：包合技术，即如何从攻击网站向 $sdr$ 发出请求
-    \item $t\in T$：泄露技术，即如何观察目标网站上的差异
-\end{itemize}
-
-在以上的例子中：
-
-\begin{itemize}
-    \item $url=$ \code{https://google.com/search?q=[query]}
-    \item $S=\{$ \code{query} 未被查询, \code{query} 已被查询 $\}$
-    \item $D=\{$ 时间间隔较长, 时间间隔较短 $\}$
-    \item $i$ 可以使用多种方式，比如将 $url$ 嵌入到攻击网站中的 \code{iframe}
-    \item $t$ 为计时攻击
-\end{itemize}
-
-\subsubsection{扩展模型 \cite{modelext}}
-
-\citeauthor{modelext} 用 \citeauthor{modelbase} 的模型为基础，作出了扩展：
+跨站点泄露漏洞的诞生是由跨来源资源共享（CORS）策略而引发的。某个资源的来源是由它的方案 (协议)，主机 (域名) 和端口而组成。两个资源是同源的当且仅当以上三个元素都相等。服务器向浏览器发送的响应中的 CORS 头指示浏览器如何响应中的资源。若不许跨站点的网站或脚本读取资源，则攻击者必须使用旁道攻击技巧——跨站点泄露漏洞——窃取信息。
 
