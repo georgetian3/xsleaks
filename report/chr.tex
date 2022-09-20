@@ -2,9 +2,7 @@
 
 \subsection{概念验证}
 
-\href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 Performance API，影响到 Chromium 的攻击 \cite{herrera}。Service worker \url{https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API} 
-
-Performance API（性能接口）让开发者精确地测量网页在用户的设备上的性能 \cite{papi}。此攻击
+\href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 Performance API，影响到 Chromium 的攻击 \cite{herrera}。Service worker \url{https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API} 可以作为网页、浏览器以及互联网之间的代理。它的一个特征是可以拦截一个网页发出的请求，并为此返回响应。Performance API（性能接口）让开发者精确地测量网页在用户的设备上的性能 \cite{papi}。其中的 \code{performance.getEntries()} 返回所有此网页及其资源的加载所产生的 \code{PerformanceEntry} 对象。
 
 攻击过程如下：
 
@@ -25,7 +23,7 @@ Performance API（性能接口）让开发者精确地测量网页在用户的�
 
 \subsection{修复方法}
 
-由于概念验证中检测资源大小基于成功与失败创建 \code{PerformanceEntry} 的行为的差异 \url{https://chromium.googlesource.com/chromium/src/+/5e556dd80e03b7a217e10990d71be25d07e1ece7}
+由于概念验证中检测资源大小基于成功与失败创建 \code{PerformanceEntry} 的行为的差异 \url{https://chromium.googlesource.com/chromium/src/+/5e556dd80e03b7a217e10990d71be25d07e1ece7}：
 
 \begin{quote}
     Currently we don't report performance entries with failing status codes.
@@ -35,7 +33,7 @@ Performance API（性能接口）让开发者精确地测量网页在用户的�
     This CL fixes that to report them similarly to successful status codes.
 \end{quote}
 
-此修复的具体实现比较简单。源代码的版本库将 \url{https://chromium-review.googlesource.com/c/chromium/src/+/1796544}
+此修复的具体实现比较简单。源代码的版本库将 \url{https://github.com/chromium/chromium/commit/5e556dd80e03b7a217e10990d71be25d07e1ece7}
 
 \begin{lstlisting}
 if (resource->GetResponse().IsHTTP() &&
@@ -48,27 +46,48 @@ if (resource->GetResponse().IsHTTP() &&
 if (resource->GetResponse().IsHTTP())
 \end{lstlisting}
 
-
 即任何响应，无论状态码表示成功或失败，都会产生一个 \code{PerformanceEntry}。
-
 
 通过运行 Luan 的概念验证，可以确认此修复成功地防止此攻击。
 
 \subsection{扩展}
 
-Luan 的概念验证
+假设资源的 URL 是 \code{target.com/resource}。只有 \code{audio} 以及 \code{video} 元素在 URL 中加入 \code{size} 参数时，比如 \code{target.com/resource&size=25}，浏览器才会将
 
-假设资源的 URL 是 \code{target.com/resource}。只有 \code{audio} 以及 \code{video} 元素在 URL 中加入 \code{size} 参数时，即 \code{target.com/resource&size=}比如 浏览器才会
+isHttp() -> ShouldPopulateResourceTiming
 
+\url{https://github.com/chromium/chromium/commit/35d595aa9c977320c3d9aa58be69b21905e02f3d}
 
-但是如果
+\begin{lstlisting}
+if (resource->GetResponse().ShouldPopulateResourceTiming())
+\end{lstlisting}
 
+其中 \code{ShouldPopulateResourceTiming} 的定义为：
 
-range 65536-
+\begin{lstlisting}
+bool ResourceResponse::ShouldPopulateResourceTiming() const {
+    return IsHTTP() || WebBundleURL().IsValid();
+}
+\end{lstlisting}
+
+若希望通过 \code{performance.getEntries()} 的行为的差异实现一个漏洞，就需要分析如何将
+
+\code{ShouldPopulateResourceTiming()} 返回不同的布尔值。
+
+其中 \code{WebBundelURL()} 返回的是 \code{KURL} 类，而 \code{IsValid()} 返回的是 \code{KURL} 类的 \code{is_valid_} 变量，而可以改变 \code{is_valid_} 的成员函数为构造函数、拷贝构造函数、\code{Init}、以及 \code{ReplaceComponents}。目前没有
+
+\code{IsHTTP()} 返回 \code{KURL} 类的 \code{protocol_is_in_http_family_} 变量，默认为假，而唯一将它设为真的地方在 \code{InitProtocolMetadata} 成员函数。
+
+需要更深入分析以上函数，可能存在漏洞。
+
+range 65536- ? not appearing now
 
 img vs audio/video in determining file type
 
-\code{performance.getEntries()} 的稳定性也较差。
+
+
+\code{performance.getEntries()} 的稳定性也较差。在测试 POC 的过程中，偶尔需要多次刷新后请求才会被 service worker 拦截。甚至在发出请求的时刻调整浏览器窗口的大小会改变此请求完成后产生的 \code{PerformanceEntry} 对象，以及将 \code{onsuspend} 时间属性被调用。
 
 
 不稳定
+

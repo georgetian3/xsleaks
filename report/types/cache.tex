@@ -15,7 +15,7 @@ Related:
     \item \url{https://link.springer.com/content/pdf/10.1007/978-3-319-18467-8.pdf} pdf page 110, parallized cache probing
 \end{itemize}
 
-\subsection{错误事件}
+\subsubsection{错误事件}
 
 \begin{enumerate}
     \item 使被缓存的资源无效：
@@ -29,7 +29,7 @@ Related:
     \item 再对同一个资源发出请求，但需要将服务器拒绝此请求（比如使用 overlong referer header）。若此资源在第二步被缓存了，则此请求会成功，否则抛出错误
 \end{enumerate}
 
-\subsection{CORS error on Origin Reflection misconfiguration}
+\subsubsection{CORS error on Origin Reflection misconfiguration}
 
 若响应包含 Access-Control-Allow-Orign (ACAO)，发出请求的来源以及被请求的资源一起被缓存在本地。若 \code{attacker.com} 访问此资源：
 
@@ -40,11 +40,11 @@ Related:
 
 容易避免：在资源上设置 \code{Access-Control-Allow-Origin: *}
 
-\subsection{Fetch with AbortController}
+\subsubsection{Fetch with AbortController}
 
 见 错误事件
 
-\subsection{防范措施}
+\subsubsection{防范措施}
 
 \begin{itemize}
     \item 通过设置 \code{Cache-Control: no-store} 禁用缓存，非常简单、高效地防止此类攻击，并被大多数浏览器支持，但对网页的加载速度有负面的影响
