@@ -37,7 +37,7 @@
         }
       }
 
-      var base = 'https://baidu.com/';
+      var base = 'https://target.ziwen.ibgang.com/';
       var resources = [
         //'text.txt',
         'audio.mp3',
@@ -64,7 +64,7 @@
         for (const element of elements) {
           for (const resource of resources) {
             for (const size of sizes) {
-              requests.push([element, base, size]);
+              requests.push([element, base + resource, size]);
             }
           }
         }
