@@ -31,3 +31,7 @@ summarize leaks
 serviceworker overall function/leaks
 
 does browser differentiate between response from sw vs server
+
+
+
+img range header - use gif?
