@@ -5,7 +5,7 @@
 			if ("serviceWorker" in navigator) {
 				addEventListener("load", async () => {
 					performance.setResourceTimingBufferSize(1337);
-					const registration = await navigator.serviceWorker.register("static/serviceworker.js");
+					const registration = await navigator.serviceWorker.register("serviceworker.js");
 					if (registration.installing)
 						location.reload();
 				});
@@ -14,7 +14,7 @@
 			singleSizeCheck =  async (url, size) => {
 				let start   = performance.getEntries().length;
 				let sound   = document.createElement("audio");
-				sound.src = `${url}?size=${size}`;
+				sound.src = `${url}?size=${size}&${Math.random()}`;
 				return new Promise((resolve) => {
 					sound.onerror = () => {
 						let end = performance.getEntries().length;
@@ -54,7 +54,7 @@
 			}
 			
 			onload = () => {
-				sizeLoop("https://www.baidu.com/robots.txt", 3100);
+				sizeLoop("https://www.google.com/robots.txt", 7240);
 			}
 	</script>
 </head>
