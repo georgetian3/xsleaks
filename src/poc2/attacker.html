@@ -21,7 +21,10 @@
           element.type = 'image';
         } else if (tag == 'link') {
           element.type = 'prerender';
-        }
+        } else if (tag == 'track') {
+          new_element = document.createElement('audio');
+          new_element.appendChild(element);
+
 
         element[attribute] = `${url}?id=${id < 10 ? '0' + id : id}&size=${size}&tag=${tag}-${attribute}`;
         id++;
@@ -58,6 +61,7 @@
         ['link', 'href', 'body'],
         ['object', 'data', 'body'],
         ['script', 'src', 'body'],
+        ['source', 'src', 'body'], 
         ['track', 'src', 'body'],
         ['video', 'poster', 'body'],
         ['video', 'src', 'body'],
