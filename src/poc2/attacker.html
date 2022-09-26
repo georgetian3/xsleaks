@@ -16,7 +16,7 @@
       function get(tag, attribute, location, url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement(tag);
-        element[attribute] = `${url}?id=${id < 10 ? '0' + id : id}&size=${size}&tag=${tag}`;
+        element[attribute] = `${url}?id=${id < 10 ? '0' + id : id}&size=${size}&tag=${tag}-${attribute}`;
         id++;
         if (location != '') {
           element.hidden = true;
