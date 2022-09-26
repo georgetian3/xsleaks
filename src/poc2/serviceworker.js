@@ -6,6 +6,8 @@ self.addEventListener('install', function() {
     self.skipWaiting();
 });
 
+function print(
+
 self.addEventListener('fetch', function(e) {
   let url = new URL(e.request.url);
   if (url == 'https://attacker.georgetian.com/reset') {
@@ -16,10 +18,11 @@ self.addEventListener('fetch', function(e) {
   let urlParams = new URLSearchParams(url.search);
   let size = urlParams.get('size');
   let id = urlParams.get('id');
+  let tag = urlParams.get('tag');
   let body = 'A'.repeat(Number(size));
   if (!requested.has(id)) {
     requested.add(id);
-    console.log('intercepted', url);
+    console.log('intercepted', size, tag, id);
   	e.respondWith(
       new Response(body,
         {

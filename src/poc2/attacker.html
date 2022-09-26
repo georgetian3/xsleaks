@@ -15,7 +15,7 @@
       function get(tag, attribute, location, url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement(tag);
-        element[attribute] = `${url}?size=${size}&id=${performance.now()}&${tag}`;
+        element[attribute] = `${url}?size=${size}&id=${performance.now()}&tag=${tag}`;
         if (location != '') {
           document[location].appendChild(element);
         }
