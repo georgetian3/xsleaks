@@ -23,7 +23,7 @@
           document[location].appendChild(element);
         }
 
-        for (const event in events) {
+        for (const event of events) {
           console.log(event);
           element[event] = () => {
             show(tag, url, size, event, performance.getEntries().length - start);
