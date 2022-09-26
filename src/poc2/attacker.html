@@ -20,7 +20,7 @@
         if (tag == 'input') {
           element.type = 'image';
         } else if (tag == 'link') {
-          element.type = 'external';
+          element.type = 'stylesheet';
         }
 
         element[attribute] = `${url}?id=${id < 10 ? '0' + id : id}&size=${size}&tag=${tag}-${attribute}`;
