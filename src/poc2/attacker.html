@@ -65,9 +65,16 @@
         
         fetch('/reset');
 
-
+        let i = 1;
         for (let i = 0; i < requests.length; i++) {
-          setTimeout(get, (i + 1) * delay, requests[i][0], requests[i][1], requests[i][2], requests[i][3]);
+          
+        }
+
+        for (const [key, value] of tags.entries()) {
+          for (const size of sizes) {
+            setTimeout(get, i * delay, element, attribute, base, size);
+            i++;
+          }
         }
 
       }
