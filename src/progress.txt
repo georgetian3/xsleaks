@@ -35,3 +35,7 @@ does browser differentiate between response from sw vs server
 
 
 img range header - use gif?
+
+- body: use ; or space for valid js
+- hidden doesn't request for input
+- input needs type to be img
