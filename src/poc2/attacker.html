@@ -21,7 +21,7 @@
         }
 
         for (const event in events) {
-          e[event] = () => {
+          element[event] = () => {
             show(tag, url, size, event, performance.getEntries().length - start);
             //console.log(performance.getEntries())
           }
