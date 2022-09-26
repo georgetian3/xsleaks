@@ -17,7 +17,7 @@ self.addEventListener('fetch', function(e) {
   let size = urlParams.get('size');
   let id = urlParams.get('id');
   let tag = urlParams.get('tag');
-  let body = 'A'.repeat(Number(size));
+  let body = ';'.repeat(Number(size));
   if (!requested.has(id)) {
     requested.add(id);
     console.log('intercepted', size, tag, id);
