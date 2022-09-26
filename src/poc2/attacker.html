@@ -67,7 +67,7 @@
 
         let i = 1;
         console.log(tags);
-        for (let tag of tags) {
+        for (let tag in tags) {
           for (const size of sizes) {
             setTimeout(get, i * delay, tag, tags[tag], base, size);
             i++;
