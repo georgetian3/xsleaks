@@ -11,7 +11,7 @@ self.addEventListener('fetch', function(e) {
   if (url == 'https://attacker.georgetian.com/reset') {
     requested.clear();
     console.log('Reset');
-    e.respondWith(new Response(body, {status: 200}));
+    e.respondWith(new Response('', {status: 200}));
     return;
   }
   let urlParams = new URLSearchParams(url.search);
