@@ -64,13 +64,7 @@
       function run() {
         
         fetch('/reset');
-        let elements = [];
-        
-        for (let key in tags) {
-          for (const size of sizes) {
-            requests.push([key, tags[key], base + resource, size]);
-          }
-        }
+
 
         for (let i = 0; i < requests.length; i++) {
           setTimeout(get, (i + 1) * delay, requests[i][0], requests[i][1], requests[i][2], requests[i][3]);
