@@ -21,6 +21,7 @@
           element.type = 'image';
         } else if (tag == 'link') {
           element.type = 'prerender';
+          element.as = 'audio';
         } else if (tag == 'source' || tag == 'track') {
           new_element = document.createElement('audio');
           new_element.appendChild(element);
