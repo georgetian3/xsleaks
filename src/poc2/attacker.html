@@ -57,12 +57,10 @@
         
         fetch('/reset');
 
-        let i = 1;
         console.log(tags);
-        for (let tag in tags) {
+        for (var i = 0; i < tags.length; i++) {
           for (const size of sizes) {
-            setTimeout(get, i * delay, tag, tags[tag], base, size);
-            i++;
+            setTimeout(get, (i + 1) * delay, tags[i][0], tags[i][1], tags[i][2], base, size);
           }
         }
 
