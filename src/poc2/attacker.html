@@ -24,6 +24,8 @@
         } else if (tag == 'track') {
           new_element = document.createElement('audio');
           new_element.appendChild(element);
+          element = new_element;
+        }
 
 
         element[attribute] = `${url}?id=${id < 10 ? '0' + id : id}&size=${size}&tag=${tag}-${attribute}`;
