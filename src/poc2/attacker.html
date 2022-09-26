@@ -19,6 +19,7 @@
         element[attribute] = `${url}?size=${size}&id=${id}&tag=${tag}`;
         id++;
         if (location != '') {
+          element.hidden = true;
           document[location].appendChild(element);
         }
 
