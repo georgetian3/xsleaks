@@ -11,7 +11,7 @@
       function get(element, attribute, url, size) {
         let start = performance.getEntries().length;
         let e = document.createElement(element);
-        e[attribute] = `${url}?size=${size}&id=${performance.now()}`;
+        e[attribute] = `${url}?size=${size}&id=${performance.now()}&tag=${element}`;
 
         e.onload = () => {
           show(element, url, size, 'onload', performance.getEntries().length - start);
