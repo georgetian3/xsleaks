@@ -20,7 +20,7 @@ self.addEventListener('fetch', function(e) {
   let body = ';'.repeat(Number(size));
   if (!requested.has(id)) {
     requested.add(id);
-    console.log('intercepted', size, tag, id);
+    console.log('intercepted', 'id', id, 'size', size, 'tag', tag);
   	e.respondWith(
       new Response(body,
         {
