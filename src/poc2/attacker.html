@@ -12,7 +12,7 @@
         let start = performance.getEntries().length;
         let e = document.createElement(element);
         e[attribute] = `${url}?size=${size}&id=${performance.now()}&${element}`;
-        document.body.append(e);
+        document.head.append(e);
 
         e.onload = () => {
           show(element, url, size, 'onload', performance.getEntries().length - start);
