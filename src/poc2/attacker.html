@@ -11,11 +11,13 @@
       var events = [
         'onload', 'onerror', 'onabort', 'onemptied', 'onstalled', 'onsuspend',
       ]
+      var id = 0;
 
       function get(tag, attribute, location, url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement(tag);
-        element[attribute] = `${url}?size=${size}&id=${performance.now()}&tag=${tag}`;
+        element[attribute] = `${url}?size=${size}&id=${id}&tag=${tag}`;
+        id++;
         if (location != '') {
           document[location].appendChild(element);
         }
