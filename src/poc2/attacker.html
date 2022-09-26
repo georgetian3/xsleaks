@@ -67,9 +67,9 @@
 
         let i = 1;
 
-        for (const [key, value] of tags.entries()) {
+        for (let tag of tags) {
           for (const size of sizes) {
-            setTimeout(get, i * delay, element, attribute, base, size);
+            setTimeout(get, i * delay, tag, tags[tag], base, size);
             i++;
           }
         }
