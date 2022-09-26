@@ -24,7 +24,6 @@
         }
 
         for (const event of events) {
-          console.log(event);
           element[event] = () => {
             show(tag, url, size, event, performance.getEntries().length - start);
           }
@@ -90,11 +89,6 @@
   </head>
 
   <body>
-    <!-- <input type="checkbox" id="sw">
-    <label>Install Service Worker</label>
-    <br>
-    <button onclick="run();">Start</button>
-    <br> -->
     <table>
       <thead>
         <tr>
