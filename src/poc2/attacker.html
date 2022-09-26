@@ -16,8 +16,16 @@
       function get(tag, attribute, location, url, size) {
         let start = performance.getEntries().length;
         let element = document.createElement(tag);
+
+        if (tag == 'input') {
+          element.type = 'image';
+        }
+
         element[attribute] = `${url}?id=${id < 10 ? '0' + id : id}&size=${size}&tag=${tag}-${attribute}`;
         id++;
+
+        
+
         if (location != '') {
           element.hidden = true;
           document[location].appendChild(element);
@@ -38,7 +46,7 @@
       ];
 
       var tags = [
-        ['applet', 'code', 'body'],
+        //['applet', 'code', 'body'], not supported in HTML 5
         ['audio', 'src', 'body'],
         ['embed', 'src', 'body'],
         ['frame', 'src', 'body'],
