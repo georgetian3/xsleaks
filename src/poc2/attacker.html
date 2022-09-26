@@ -11,8 +11,10 @@
       function get(element, attribute, url, size) {
         let start = performance.getEntries().length;
         let e = document.createElement(element);
-        e[attribute] = `${url}?size=${size}&id=${performance.now()}&${element}`;
-        document.head.append(e);
+        e[attribute[0]] = `${url}?size=${size}&id=${performance.now()}&${element}`;
+        if (attribute[1] != '') {
+          document[attribute[1]].append(e);
+        }
 
         e.onload = () => {
           show(element, url, size, 'onload', performance.getEntries().length - start);
@@ -45,19 +47,19 @@
       ];
 
       var tags = {
-        'applet': 'code',
-        'audio': 'src',
-        'embed': 'src',
-        'frame': 'src',
-        'iframe': 'src',
-        'img': 'src',
-        'input': 'src',
-        'link': 'href',
-        'object': 'data',
-        'script': 'src',
-        'track': 'src',
-        'video': 'poster',
-        'video': 'src',
+        'applet': ('code', 'body'),
+        'audio': ('src', 'body'),
+        'embed': ('src', 'body'),
+        'frame': ('src', 'body'),
+        'iframe': ('src', 'body'),
+        'img': ('src', 'body'),
+        'input': ('src', 'body'),
+        'link': ('href', 'body'),
+        'object': ('data', 'body'),
+        'script': ('src', 'body'),
+        'track': ('src', 'body'),
+        'video': ('poster', 'body'),
+        'video': ('src', 'body'),
       }
 
       var delay = 200;
