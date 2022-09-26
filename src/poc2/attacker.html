@@ -8,34 +8,23 @@
         document.getElementById('tbody').innerHTML += `<tr><td>${element}</td><td>${url}</td><td>${size}</td><td>${event}</td><td>${diff}</td><tr>`;
       }
 
-      function get(element, attribute, url, size) {
+      var events = [
+        'onload', 'onerror', 'onabort', 'onemptied', 'onstalled', 'onsuspend',
+      ]
+
+      function get(tag, attribute, location, url, size) {
         let start = performance.getEntries().length;
-        let e = document.createElement(element);
-        e[attribute[0]] = `${url}?size=${size}&id=${performance.now()}&${element}`;
-        if (attribute[1] != '') {
-          document[attribute[1]].append(e);
+        let element = document.createElement(tag);
+        element[attribute] = `${url}?size=${size}&id=${performance.now()}&${tag}`;
+        if (location != '') {
+          document[location].appendChild(element);
         }
 
-        e.onload = () => {
-          show(element, url, size, 'onload', performance.getEntries().length - start);
-          //console.log(performance.getEntries())
-        }
-        e.onerror = () => {
-          show(element, url, size, 'onerror', performance.getEntries().length - start);
-          //console.log(performance.getEntries())
-
-        }
-        e.onabort = () => {
-          show(element + ' ' + attribute, url, size, 'onabort', performance.getEntries().length - start);
-        }
-        e.onemptied = () => {
-          show(element + ' ' + attribute, url, size, 'onemptied', performance.getEntries().length - start);
-        }
-        e.onstalled = () => {
-          show(element + ' ' + attribute, url, size, 'onstalled', performance.getEntries().length - start);
-        }
-        e.onsuspend = () => {
-          show(element + ' ' + attribute, url, size, 'onsuspend', performance.getEntries().length - start);
+        for (const event in events) {
+          e[event] = () => {
+            show(tag, url, size, event, performance.getEntries().length - start);
+            //console.log(performance.getEntries())
+          }
         }
       }
 
@@ -46,21 +35,21 @@
         95000,
       ];
 
-      var tags = {
-        'applet': ('code', 'body'),
-        'audio': ('src', 'body'),
-        'embed': ('src', 'body'),
-        'frame': ('src', 'body'),
-        'iframe': ('src', 'body'),
-        'img': ('src', 'body'),
-        'input': ('src', 'body'),
-        'link': ('href', 'body'),
-        'object': ('data', 'body'),
-        'script': ('src', 'body'),
-        'track': ('src', 'body'),
-        'video': ('poster', 'body'),
-        'video': ('src', 'body'),
-      }
+      var tags = [
+        ['applet', 'code', 'body'],
+        ['audio', 'src', 'body'],
+        ['embed', 'src', 'body'],
+        ['frame', 'src', 'body'],
+        ['iframe', 'src', 'body'],
+        ['img', 'src', 'body'],
+        ['input', 'src', 'body'],
+        ['link', 'href', 'body'],
+        ['object', 'data', 'body'],
+        ['script', 'src', 'body'],
+        ['track', 'src', 'body'],
+        ['video', 'poster', 'body'],
+        ['video', 'src', 'body'],
+      ]
 
       var delay = 200;
 
