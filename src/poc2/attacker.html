@@ -23,7 +23,6 @@
         for (const event in events) {
           element[event] = () => {
             show(tag, url, size, event, performance.getEntries().length - start);
-            //console.log(performance.getEntries())
           }
         }
       }
@@ -57,7 +56,6 @@
         
         fetch('/reset');
 
-        console.log(tags);
         for (var i = 0; i < tags.length; i++) {
           for (const size of sizes) {
             setTimeout(get, (i + 1) * delay, tags[i][0], tags[i][1], tags[i][2], base, size);
