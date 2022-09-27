@@ -21,7 +21,7 @@
           element.type = 'image';
         } else if (tag == 'link') {
           element.type = 'preload';
-          element.as = 'audio';
+          element.as = 'video';
         } else if (tag == 'source' || tag == 'track') {
           new_element = document.createElement('audio');
           new_element.appendChild(element);
