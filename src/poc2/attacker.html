@@ -20,7 +20,7 @@
         if (tag == 'input') {
           element.type = 'image';
         } else if (tag == 'link') {
-          element.type = 'prerender';
+          element.type = 'preload';
           element.as = 'audio';
         } else if (tag == 'source' || tag == 'track') {
           new_element = document.createElement('audio');
