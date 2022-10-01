@@ -1,8 +1,10 @@
-\section{基于 Service Worker 与 Performance API 的 Chromium 漏洞}
+\section{基于 Service Worker 的 Chromium 漏洞}
+
+以下的实验代码都存放在 \url{https://github.com/georgetian3/xsleaks/tree/main/src} 下。以下所关涉到的文件以及文件夹默认包含以上 URL 为前缀。大多数是模仿攻击的 HTML 以及 Javascript 代码，其中某些功能需要将代码布置到服务器上并使用 HTTPS 访问。
 
 \subsection{概念验证}
 
-\href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 Performance API，影响到 Chromium 的攻击 \cite{herrera}。Service worker \url{https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API} 可以作为网页、浏览器以及互联网之间的代理。它的一个特征是可以拦截一个网页发出的请求，并为此返回响应。Performance API（性能接口）让开发者精确地测量网页在用户的设备上的性能 \cite{papi}。其中的 \code{performance.getEntries()} 返回所有此网页及其资源的加载所产生的 \code{PerformanceEntry} 对象。
+\href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 Performance API，影响到 Chromium 的攻击 \cite{herrera}。Service worker 可以作为网页、浏览器以及互联网之间的代理 \cite{sw} 。它可以拦截一个网页发出的请求，并为此返回响应。Performance API 让开发者精确地测量网页在用户的设备上的性能 \cite{papi}。其中的 \code{performance.getEntries()} 返回所有此网页及其资源的加载所产生的 \code{PerformanceEntry} 对象。
 
 攻击过程如下：
 
@@ -11,13 +13,13 @@
     \item 使用 \code{audio} 或 \code{video} 元素向目标资源发出请求，其请求中的字节范围头为 \code{bytes=0-}。
     \item Service Worker 拦截以上的请求，并返回任意内容，长度为 \code{n} 的响应。Chromium 会再发出类似的请求，类以区别是 \code{bytes=0-} 变成了 \code{bytes=n-}。分两种情况：
     \begin{enumerate}
-        \item 目标资源的大小小于 \code{n}，则请求失败，服务器返回 \code{416} 状态码，此事件不产生 \code{PerformanceEntry}
+        \item 目标资源的大小小于等于 \code{n}，则请求失败，服务器返回 \code{416} 状态码，此事件不产生 \code{PerformanceEntry}
         \item 目标资源的大小大于 \code{n}，则请求成功，服务器返回 \code{206} 状态码，此事件产生 \code{PerformanceEntry}
     \end{enumerate}
     \item 使用 \code{performance.getEntries().length} 可以得知当前的请求是否产生了 \code{PerformanceEntry}，从而可以判断目标资源的大小是否小于 \code{n}。
 \end{enumerate}
 
-通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。比如，Herrera 对 Google 的错误追踪系统的 XS-Search 攻击就可以使用此漏洞。
+通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。
 
 （测试包含 service worker 的网站后，为了注销 service worker, 可能需要重启浏览器程序）。
 

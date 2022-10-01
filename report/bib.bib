@@ -6,6 +6,14 @@
   	urldate = {2022-07-07},
 }
 
+@misc{sw,
+	author  = {{MDN contributors}},
+	title   = {Service Worker API},
+	url     = {https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API},
+  	date    = {2022-09-27},
+  	urldate = {2022-09-16},
+}
+
 @misc{papi,
 	author  = {Buckler, Craig},
 	title   = {How to Evaluate Site Speed with the Performance API},
@@ -22,12 +30,12 @@
     urldate = {2022-09-14}
 }
 
-@misc{m_now,
-    author  = {{MDN contributors}},
-    title   = {performance.now()},
-    url     = {https://developer.mozilla.org/en-US/docs/Web/API/Performance/now},
+@misc{stats,
+    author  = {Gelernter, Nethanel and Herzberg, Amir},
+    title   = {Cross-Site Search Attacks},
+    url     = {https://web.archive.org/web/20200614162731/http://u.cs.biu.ac.il/~herzbea/security/15-01-XSSearch.pdf},
     date    = {2022-09-13},
-    urldate = {2022-09-14}
+    urldate = {2015}
 }
 
 @misc{p_moz,
@@ -73,9 +81,8 @@ Attacks in JavaScript},
 
 @misc{clock,
     author  = {Sousa, Manuel and terjanq and Clapis, Roberto and Dworken, David and NDevTK and 1lastBr3ath and Brasco and rick.titor and Fredrickson, Chris and jub0bs},
-    title   = {Fantastic Timers and Where to Find Them: High-Resolution Microarchitectural
-Attacks in JavaScript},
-    url     = {Clocks},
+    title   = {Clocks},
+    url     = {https://xsleaks.dev/docs/attacks/timing-attacks/clocks/},
     date    = {2020-12-23},
     urldate = {2022-09-14}
 }
@@ -99,6 +106,22 @@ Attacks in JavaScript},
     urldate = {2022-07-07},
 }
 
+@misc{speed,
+    author  = {Sousa, Manuel and terjanq and Clapis, Roberto and Dworken, David and NDevTK and 1lastBr3ath and Brasco and rick.titor and Fredrickson, Chris and jub0bs},
+    title   = {Connection speed},
+    url     = {https://xsleaks.dev/docs/attacks/timing-attacks/performance-api/#connection-speed},
+    date    = {2021-02-11},
+    urldate = {2022-09-07},
+}
+
+@misc{inflation,
+    author  = {Sousa, Manuel and terjanq and Clapis, Roberto and Dworken, David and NDevTK and 1lastBr3ath and Brasco and rick.titor and Fredrickson, Chris and jub0bs},
+    title   = {Inflation Techniques},
+    url     = {https://xsleaks.dev/docs/attacks/xs-search/#inflation-techniques},
+    date    = {2020-10-03},
+    urldate = {2022-09-27},
+}
+
 @misc{herrera,
     author  = {Herrera, Luan},
     title   = {Issue 990849: Leaking size of cross-origin resource by using Range Requests and Service Workers},
@@ -108,23 +131,35 @@ Attacks in JavaScript},
 }
 
 @inproceedings{modelbase,
-	doi = {10.1145/3460120.3484739},
-	url = {https://doi.org/10.1145%2F3460120.3484739},
-	year = 2021,
-	month = {nov},
-	publisher = {{ACM}},
-	author = {Lukas Knittel and Christian Mainka and Marcus Niemietz and Dominik Trevor No{\ss} and Jörg Schwenk},
-	title = {{XSinator}.com: From a Formal Model to the Automatic Evaluation of Cross-Site Leaks in Web Browsers},
-	booktitle = {Proceedings of the 2021 {ACM} {SIGSAC} Conference on Computer and Communications Security}
+    author = {Knittel, Lukas and Mainka, Christian and Niemietz, Marcus and No\ss{}, Dominik Trevor and Schwenk, J\"{o}rg},
+    title = {XSinator.Com: From a Formal Model to the Automatic Evaluation of Cross-Site Leaks in Web Browsers},
+    year = {2021},
+    isbn = {9781450384544},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3460120.3484739},
+    doi = {10.1145/3460120.3484739},
+    booktitle = {Proceedings of the 2021 ACM SIGSAC Conference on Computer and Communications Security},
+    pages = {1771–1788},
+    numpages = {18},
+    keywords = {browser, web security, XS-leaks},
+    location = {Virtual Event, Republic of Korea},
+    series = {CCS '21}
 }
 
 @inproceedings{modelext,
-	doi = {10.1145/3488932.3517416},
-	url = {https://doi.org/10.1145%2F3488932.3517416},
-	year = 2022,
-	month = {may},
-	publisher = {{ACM}},
-	author = {Tom Van Goethem and Gertjan Franken and Iskander Sanchez-Rola and David Dworken and Wouter Joosen},
-	title = {{SoK}},
-	booktitle = {Proceedings of the 2022 {ACM} on Asia Conference on Computer and Communications Security}
+    author = {Van Goethem, Tom and Franken, Gertjan and Sanchez-Rola, Iskander and Dworken, David and Joosen, Wouter},
+    title = {SoK: Exploring Current and Future Research Directions on XS-Leaks through an Extended Formal Model},
+    year = {2022},
+    isbn = {9781450391405},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3488932.3517416},
+    doi = {10.1145/3488932.3517416},
+    booktitle = {Proceedings of the 2022 ACM on Asia Conference on Computer and Communications Security},
+    pages = {784–798},
+    numpages = {15},
+    keywords = {formal model, same-origin policy, taxonomy, xs-leaks},
+    location = {Nagasaki, Japan},
+    series = {ASIA CCS '22}
 }
