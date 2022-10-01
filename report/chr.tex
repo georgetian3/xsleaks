@@ -19,13 +19,11 @@
     \item 使用 \code{performance.getEntries().length} 可以得知当前的请求是否产生了 \code{PerformanceEntry}，从而可以判断目标资源的大小是否小于 \code{n}。
 \end{enumerate}
 
-通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。
-
-（测试包含 service worker 的网站后，为了注销 service worker, 可能需要重启浏览器程序）。
+通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。此攻击的源代码来源于 \url{https://lbherrera.github.io/lab/chrome-8b024c22/sizeleak.html}，并复制到了 Github 库的 \code{/poc-original} 中。
 
 \subsection{修复方法}
 
-由于概念验证中检测资源大小基于成功与失败创建 \code{PerformanceEntry} 的行为的差异 \url{https://chromium.googlesource.com/chromium/src/+/5e556dd80e03b7a217e10990d71be25d07e1ece7}：
+由于概念验证中检测资源大小是基于\code{PerformanceEntry} 的个数从而判别成功与失败的请求，修复方法是将两种请求都产生 \code{PerformanceEntry} \cite{fix}：
 
 \begin{quote}
     Currently we don't report performance entries with failing status codes.
@@ -35,7 +33,9 @@
     This CL fixes that to report them similarly to successful status codes.
 \end{quote}
 
-此修复的具体实现比较简单。源代码的版本库将 \url{https://github.com/chromium/chromium/commit/5e556dd80e03b7a217e10990d71be25d07e1ece7}
+\newpage
+
+此修复的具体实现比较简单。源代码的版本库 \cite{fixcode} 将
 
 \begin{lstlisting}
 if (resource->GetResponse().IsHTTP() &&
@@ -52,13 +52,9 @@ if (resource->GetResponse().IsHTTP())
 
 通过运行 Luan 的概念验证，可以确认此修复成功地防止此攻击。
 
-\subsection{扩展}
+\subsection{\code{PerformanceEntry} 的创建条件}
 
-假设资源的 URL 是 \code{target.com/resource}。只有 \code{audio} 以及 \code{video} 元素在 URL 中加入 \code{size} 参数时，比如 \code{target.com/resource&size=25}，浏览器才会将
-
-isHttp() -> ShouldPopulateResourceTiming
-
-\url{https://github.com/chromium/chromium/commit/35d595aa9c977320c3d9aa58be69b21905e02f3d}
+修复了以上的攻击之后，Chromium 的开发者再次更改了创建 \code{PerformanceEntry} 的条件，变成了：
 
 \begin{lstlisting}
 if (resource->GetResponse().ShouldPopulateResourceTiming())
@@ -71,19 +67,14 @@ bool ResourceResponse::ShouldPopulateResourceTiming() const {
     return IsHTTP() || WebBundleURL().IsValid();
 }
 \end{lstlisting}
+    
+若希望通过 \code{performance.getEntries()} 的行为的差异实现一个漏洞，就需要分析如何
 
-若希望通过 \code{performance.getEntries()} 的行为的差异实现一个漏洞，就需要分析如何将
+\noindent\code{ShouldPopulateResourceTiming()} 返回不同的布尔值。其中 \code{WebBundelURL()} 返回的是 \code{KURL} 类，而 \code{IsValid()} 返回的是 \code{KURL} 类的 \code{is_valid_} 变量，而可以改变 \code{is_valid_} 的成员函数为构造函数、拷贝构造函数、\code{Init}、以及 \code{ReplaceComponents}。\code{IsHTTP()} 返回 \code{KURL} 类的 \code{protocol_is_in_http_family_} 变量，默认为假，而唯一将它设为真的地方在 \code{InitProtocolMetadata} 成员函数。由于代码比较繁琐，所以不再进一步分析这个方面。
 
-\code{ShouldPopulateResourceTiming()} 返回不同的布尔值。
+\subsection{其他标签的测试}
 
-其中 \code{WebBundelURL()} 返回的是 \code{KURL} 类，而 \code{IsValid()} 返回的是 \code{KURL} 类的 \code{is_valid_} 变量，而可以改变 \code{is_valid_} 的成员函数为构造函数、拷贝构造函数、\code{Init}、以及 \code{ReplaceComponents}。目前没有
-
-\code{IsHTTP()} 返回 \code{KURL} 类的 \code{protocol_is_in_http_family_} 变量，默认为假，而唯一将它设为真的地方在 \code{InitProtocolMetadata} 成员函数。
-
-需要更深入分析以上函数，可能存在漏洞。
-
-range 65536- ? not appearing now
-
+Herrara 在它的概念验证中提到需要用 \code{audio} 或 \code{video} 标签实现攻击。此次测试目的是为了
 img vs audio/video in determining file type
 
 
@@ -92,4 +83,6 @@ img vs audio/video in determining file type
 
 
 不稳定
-
+    
+    
+    假设资源的 URL 是 \code{target.com/resource}。只有 \code{audio} 以及 \code{video} 元素在 URL 中加入 \code{size} 参数时，比如 \code{target.com/resource&size=25}，浏览器才会将

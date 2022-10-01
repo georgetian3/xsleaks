@@ -8,12 +8,6 @@ self.addEventListener('install', function() {
 
 self.addEventListener('fetch', function(e) {
   let url = new URL(e.request.url);
-  if (url == 'https://attacker.georgetian.com/reset') {
-    requested.clear();
-    console.log('Reset');
-    e.respondWith(new Response('', {status: 200}));
-    return;
-  }
   let urlParams = new URLSearchParams(url.search);
   let size = urlParams.get('size');
   let id = urlParams.get('id');
@@ -27,7 +21,6 @@ self.addEventListener('fetch', function(e) {
         {
           status: 206, headers: {
           'Content-Range': `bytes 0-${size - 1}/100000`,
-          //'Content-Type': `image/png`,
         }}
       )
     );
