@@ -19,7 +19,7 @@
     \item 使用 \code{performance.getEntries().length} 可以得知当前的请求是否产生了 \code{PerformanceEntry}，从而可以判断目标资源的大小是否小于 \code{n}。
 \end{enumerate}
 
-通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。此攻击的源代码来源于 \url{https://lbherrera.github.io/lab/chrome-8b024c22/sizeleak.html}，并复制到了 Github 库的 \code{/poc-original} 中。
+通过改变 \code{n}，比如用二分查找，可以较快地判定目标资源的大小。此攻击的源代码来源于 \url{https://lbherrera.github.io/lab/chrome-8b024c22/sizeleak.html}，并复制到了 Github 库的 \href{https://github.com/georgetian3/xsleaks/tree/main/src/poc-original}{/poc-original} 中。
 
 \subsection{修复方法}
 
@@ -74,7 +74,9 @@ bool ResourceResponse::ShouldPopulateResourceTiming() const {
 
 \subsection{其他标签的测试}
 
-Herrara 在它的概念验证中提到需要用 \code{audio} 或 \code{video} 标签实现攻击。此次测试目的是为了
+Herrara 在它的概念验证中提到需要用 \code{audio} 或 \code{video} 标签实现攻击。此次测试目的是为了判定在修复 \code{PerformanceEntry} 的产生条件之前，其他哪些标签也可以发出请求。测试代码存放在 \href{https://github.com/georgetian3/xsleaks/tree/main/src/tags}{/tags} 下。
+
+
 img vs audio/video in determining file type
 
 
