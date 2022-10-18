@@ -1,6 +1,6 @@
 \subsection{Error Events}
 
-网页资源的加载可以成果或失败，并调用元素的一个函数比如 \code{onload}、\code{onerror} 等等 \url{https://www.w3schools.com/tags/ref_eventattributes.asp}。用户未登录，服务器返回的数据无法被浏览器解析都可能 \code{onerror} 的触发。比如，如果用户的头像 \code{target.com/profile_picture} 只能被登录后的用户访问，则以下的代码可以泄漏用户的登录状态：
+网页资源的加载可以成果或失败，并调用元素的一个函数比如 \code{onload}、\code{onerror} 等等 \cite{ee}。用户未登录，服务器返回的数据无法被浏览器解析都可能 \code{onerror} 的触发。比如，如果用户的头像 \code{target.com/profile_picture} 只能被登录后的用户访问，则以下的代码可以泄漏用户的登录状态：
 
 \begin{lstlisting}
 function is_logged_in(url) {

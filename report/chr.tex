@@ -1,13 +1,12 @@
 \section{基于 Service Worker 的 Chromium 漏洞}
 
-以下的实验代码都存放在 \url{https://github.com/georgetian3/xsleaks/tree/main/src} 下。以下所关涉到的文件以及文件夹默认包含以上 URL 为前缀。大多数是模仿攻击的 HTML 以及 Javascript 代码，其中某些功能需要将代码布置到服务器上并使用 HTTPS 访问。
+以下的实验代码都存放在 \url{https://github.com/georgetian3/xsleaks/tree/main/src/} 下。以下所关涉到的文件以及文件夹默认包含以上 URL 为前缀。库中大多数是模仿攻击的 HTML 以及 Javascript 代码，其中某些功能需要将代码布置到服务器上并使用 HTTPS 访问。以下测试都在 Chrome 106.0.5249.91 上运行的。
 
 \subsection{概念验证}
 
 \href{https://blog.lbherrera.me/}{Luan Herrera} 在 2019 年提出了基于 service worker 以及 Performance API，影响到 Chromium 的攻击 \cite{herrera}。Service worker 可以作为网页、浏览器以及互联网之间的代理 \cite{sw} 。它可以拦截一个网页发出的请求，并为此返回响应。Performance API 让开发者精确地测量网页在用户的设备上的性能 \cite{papi}。其中的 \code{performance.getEntries()} 返回所有此网页及其资源的加载所产生的 \code{PerformanceEntry} 对象。
 
 攻击过程如下：
-
 \begin{enumerate}
     \item 安装拦截 range header（字节范围头）为 \code{bytes=0-} 的请求的 Service Worker。
     \item 使用 \code{audio} 或 \code{video} 元素向目标资源发出请求，其请求中的字节范围头为 \code{bytes=0-}。
@@ -50,7 +49,7 @@ if (resource->GetResponse().IsHTTP())
 
 即任何响应，无论状态码表示成功或失败，都会产生一个 \code{PerformanceEntry}。
 
-通过运行 Luan 的概念验证，可以确认此修复成功地防止此攻击。
+通过运行 Herrera 的概念验证，可以确认此修复成功地防止此攻击。
 
 \subsection{\code{PerformanceEntry} 的创建条件}
 
@@ -74,17 +73,30 @@ bool ResourceResponse::ShouldPopulateResourceTiming() const {
 
 \subsection{其他标签的测试}
 
-Herrara 在它的概念验证中提到需要用 \code{audio} 或 \code{video} 标签实现攻击。此次测试目的是为了判定在修复 \code{PerformanceEntry} 的产生条件之前，其他哪些标签也可以发出请求。测试代码存放在 \href{https://github.com/georgetian3/xsleaks/tree/main/src/tags}{/tags} 下。
+Herrera 在它的概念验证中提到需要用 \code{audio} 或 \code{video} 标签实现攻击。此次测试目的是为了判定在修复 \code{PerformanceEntry} 的产生条件之前，其他哪些标签也可以发出请求。测试代码存放在 \href{https://github.com/georgetian3/xsleaks/tree/main/src/tags}{/tags} 下。运行后并打开 Chrome DevTools。结果如下：
 
+\begin{itemize}
+    \item \code{audio}、\code{source}、\code{track}、\code{video}（使用 \code{src} 属性）都有相同的行为，即：
+    \begin{enumerate}
+        \item 请求头包含 \code{Range: bytes=0-} 的请求被 service worker 拦截，返回的状态码为 \code{206}
+        \item 若响应头包含 \code{Content-Range: bytes 0-9/100000}，Chrome 再次发出请求，请求头包含 \code{Range: bytes=10-}，并且响应的状态码为 \code{206}
+        \item 若响应头包含 \code{Content-Range: bytes 0-999/100000}，Chrome 再次发出请求，请求头包含 \code{Range: bytes=1000-}，并且响应的状态码为 \code{416}
+    \end{enumerate}
+    \item \code{img}、\code{input}、\code{script} 都被 service worker 拦截，响应的状态码为 \code{206}，但 Chromium 不会再次发出请求。
+    \item \code{embed}、\code{frame}、\code{iframe}、\code{object} 不被 service worker 拦截，直接返回 \code{200} 状态码。
+\end{itemize}
 
-img vs audio/video in determining file type
+\subsection{分析}
 
+以上可以被 service worker 拦截并且 Chromium 会再次发出响应的标签都适用于流数据，比如视频和声音。这是 Chromium 会再次发出请求的可能的原因。其他标签，虽然可能返回的是 \code{206} 状态码，但是 Chromium 不会再发出请求。
 
+虽然此攻击可能泄漏的信息的导致此攻击的严重性较大，但是\code{performance.getEntries()} 的稳定性也较差。在测试概念验证的过程中，偶尔需要多次刷新后请求才会被 service worker 拦截。甚至在发出请求的时刻调整浏览器窗口的大小会改变此请求完成后产生的 \code{PerformanceEntry} 对象，以及将 \code{onsuspend} 与其他事件属性被调用。
 
-\code{performance.getEntries()} 的稳定性也较差。在测试 POC 的过程中，偶尔需要多次刷新后请求才会被 service worker 拦截。甚至在发出请求的时刻调整浏览器窗口的大小会改变此请求完成后产生的 \code{PerformanceEntry} 对象，以及将 \code{onsuspend} 时间属性被调用。
+此外，Herrera 在 2021 年提出了两个类似的攻击：
 
-
-不稳定
+\begin{enumerate}
+    \item \url{https://bugs.chromium.org/p/chromium/issues/detail?id=1260649}
+    \item \url{https://bugs.chromium.org/p/chromium/issues/detail?id=1270990}
+\end{enumerate}
     
-    
-    假设资源的 URL 是 \code{target.com/resource}。只有 \code{audio} 以及 \code{video} 元素在 URL 中加入 \code{size} 参数时，比如 \code{target.com/resource&size=25}，浏览器才会将
+其中攻击过程与原始的过程的前两个步骤完全一样，不同之处在于如何判别响应的状态码。第一个攻击使用了 Cache API，而第二个响应也使用 \code{PerformanceEntry} 的创建，但只针对于 \code{<link preload>} 标签。这些攻击依然可以获取一个资源的大小，并且已经被修复。Herrera 发现的三个漏洞都使用 service worker 发出请求，但可以使用不同的方法探测响应的状态码，并且修复方式是防止攻击者检测到不同的状态码。这可能表明以上的修复没有修复这些漏洞的本质根源。Service worker 的权限可能过于广泛，而如何合理地限制它，避免产生更多漏洞，但依然让它有效地服务网页资源的加载是以后的研究方向。
